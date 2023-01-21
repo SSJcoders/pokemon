@@ -4,12 +4,16 @@ import Home from "./pages/Home";
 
 const GlobalStyle = createGlobalStyle`
 ${reset};
+
 *{
   box-sizing: border-box;
 }
+
 body{
   font-family: 'Poppins', sans-serif;
+  font-weight: 700;
 }
+
 .rock {
   background-color: rgb(148, 81, 81);
 }

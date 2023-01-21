@@ -1,6 +1,27 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styled, { keyframes } from "styled-components";
 import Modal from "../components/Modal";
+
+function Pokemon({ pokemon }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const { id, name, weight, height, sprites, types } = pokemon;
+  const majorType = types[0].type.name;
+
+  return (
+    <>
+      <Card className={majorType} onClick={() => setIsModalOpen(true)}>
+        <CardImg src={sprites.other.dream_world.front_default} />
+        <CardName>{name}</CardName>
+      </Card>
+      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        {name}
+      </Modal>
+    </>
+  );
+}
+
+export default Pokemon;
 
 const dance = keyframes`
   0%, 100% {
@@ -32,35 +53,17 @@ const Card = styled.div`
     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
   cursor: pointer;
+
   &:hover ${CardImg} {
     animation: ${dance} 1s linear infinite 100ms;
   }
 `;
 
 const CardName = styled.span`
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: 600;
+
   &::first-letter {
     text-transform: uppercase;
   }
 `;
-
-function Pokemon({ pokemon }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const { id, name, weight, height, sprites, types } = pokemon;
-  const majorType = types[0].type.name;
-  return (
-    <>
-      <Card className={majorType} onClick={() => setIsModalOpen(true)}>
-        <CardImg src={sprites.other.dream_world.front_default} />
-        <CardName>{name}</CardName>
-      </Card>
-      <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        {name}
-      </Modal>
-    </>
-  );
-}
-
-export default Pokemon;

@@ -1,7 +1,17 @@
-import React from "react";
 import ReactDom from "react-dom";
-
 import styled from "styled-components";
+
+export default function Modal({ open, children, onClose }) {
+  if (!open) return null;
+
+  return ReactDom.createPortal(
+    <>
+      <ModalOverlay onClick={onClose}></ModalOverlay>
+      <ModalContents>{children}</ModalContents>
+    </>,
+    document.getElementById("portal")
+  );
+}
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -25,13 +35,3 @@ const ModalContents = styled.div`
   z-index: 1;
   padding: 50px;
 `;
-export default function Modal({ open, children, onClose }) {
-  if (!open) return null;
-  return ReactDom.createPortal(
-    <>
-      <ModalOverlay onClick={onClose}></ModalOverlay>
-      <ModalContents>{children}</ModalContents>
-    </>,
-    document.getElementById("portal")
-  );
-}
