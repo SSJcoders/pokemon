@@ -3,13 +3,13 @@ import Pokeball from "../assets/pokeball-sm.png";
 import Pattern from "../assets/pattern.png";
 
 function PokemonItem({ pokemon }) {
-  const { id, name, types, sprites } = pokemon;
+  const { id, names, types, sprites } = pokemon;
   const majorType = pokemon.types[0].type.name;
 
   return (
     <Wrapper majorType={majorType}>
       <Number>{"#" + String(id).padStart(4, "0")}</Number>
-      <Name>{name}</Name>
+      <Name>{names["kr"]}</Name>
       <Types>
         {types.map(({ type }) => (
           <Type key={type.name} type={type.name}>

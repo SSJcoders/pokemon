@@ -38,8 +38,8 @@ function Main() {
 
   const pokemonList = usePokemon()
     // 검색
-    .filter(({ name, id }) => {
-      return name.includes(keyword) || id === Number(keyword);
+    .filter(({ names, id }) => {
+      return names["kr"].includes(keyword) || id === Number(keyword);
     })
     // 필터링
     .filter(({ types }) => {
@@ -54,9 +54,17 @@ function Main() {
         case "num_desc":
           return b.id - a.id;
         case "name_asc":
-          return b.name > a.name ? -1 : b.name < a.name ? 1 : 0;
+          return b.names["kr"] > a.names["kr"]
+            ? -1
+            : b.names["kr"] < a.names["kr"]
+            ? 1
+            : 0;
         case "name_desc":
-          return a.name > b.name ? -1 : a.name < b.name ? 1 : 0;
+          return a.names["kr"] > b.names["kr"]
+            ? -1
+            : a.names["kr"] < b.names["kr"]
+            ? 1
+            : 0;
         default:
           return a.id - b.id;
       }
@@ -126,9 +134,7 @@ function Main() {
         {pokemonList.length > 0 ? (
           <PokemonList>
             {pokemonList?.map((pokemon) => (
-              <PokemonItem key={pokemon.name} pokemon={pokemon}>
-                {pokemon.name}
-              </PokemonItem>
+              <PokemonItem key={pokemon.name} pokemon={pokemon} />
             ))}
           </PokemonList>
         ) : (
