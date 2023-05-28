@@ -1,13 +1,37 @@
-# Pokemon App
+# 🐣 포켓몬 도감
 
-리액트를 이용하여 만든 포켓몬 도감
+목업 이미지 삽입
 
-## 주요 기능
+<br>
+
+- [🚀 포켓몬 도감 바로가기](https://rigood.github.io/pokemon)
+- 포켓몬 도감 간략한 설명
+
+<br>
+
+## 1. 프로젝트
+
+<br>
+
+## 2. 주요 기능
+
+<br>
+
+## 3. 업데이트 기록
+
+| **버전** |   **날짜**   |
+| :------: | :----------: |
+|   2.0    | 2023. 5. 28. |
+|   1.0    | 2023. 1. 21. |
+
+### ver 2.0
+
+- 실시간 검색, 정렬, 필터 기능 추가
+
+### ver 1.0
 
 - 포켓몬 카드 조회 (fetch, poke API)
 - 무한 스크롤 구현 (Intersection Observer API)
 - 상세정보 모달창으로 띄우기 (React Portal)
 
-## 참고 (Intersection Observer API)
-
-Its being called twice, the first time you feed the target (node) to the observer and the second when the target intersects with its intersection root (the scrollable div container)
+<br>

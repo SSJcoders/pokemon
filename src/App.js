@@ -1,57 +1,43 @@
-import { createGlobalStyle } from "styled-components";
+import { ThemeProvider, createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import Home from "./pages/Home";
+import theme from "./theme";
+import Main from "./pages/Main";
+import PretendardWoff2 from "./fonts/Pretendard-Regular.woff2";
+import PretendardWoff from "./fonts/Pretendard-Regular.woff";
 
 const GlobalStyle = createGlobalStyle`
 ${reset};
+
+@font-face {
+  font-family: "pretendard";
+  src: url(${PretendardWoff2}) format("woff2"),
+  url(${PretendardWoff}) format("woff");
+}
+
+@font-face {
+    font-family: 'HANAMDAUM';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/HANAMDAUM.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
 
 *{
   box-sizing: border-box;
 }
 
 body{
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
+  font-family: "pretendard";
+  background-color: #E6E8F2;
 }
 
-.rock {
-  background-color: rgb(148, 81, 81);
-}
-.ghost {
-  background-color: rgb(247, 247, 247);
-}
-.electric {
-  background-color: rgb(255, 255, 161);
-}
-.bug {
-  background-color: #F6D6A7;
-}
-.poison {
-  background-color: #e0a7f6;
-}
-.normal {
-  background-color: #F4F4F4;
-}
-.fairy {
-  background-color: rgba(255, 192, 203, 0.863);
-}
-.fire {
-  background-color: #FBE3DF;
-}
-.grass {
-  background-color:#E2F9E1;
-}
-.water {
-  background-color:#E0F1FD;
-}
 `;
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Home />
-    </>
+      <Main />
+    </ThemeProvider>
   );
 }
 
