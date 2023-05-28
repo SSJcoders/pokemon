@@ -60,7 +60,7 @@ const ModalContents = styled.div`
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   z-index: 1;
-  padding: 50px;
+  padding: 40px;
   animation: ${slideIn};
   animation-duration: 0.3s;
 `;

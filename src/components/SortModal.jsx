@@ -40,7 +40,6 @@ const Title = styled.h2`
 const SortOption = styled.button`
   width: 100%;
   padding: 15px;
-  margin-bottom: 20px;
   font-size: 16px;
   border: none;
   border-radius: 10px;
@@ -56,4 +55,8 @@ const SortOption = styled.button`
       color: ${(props) => props.theme.colors.white};
       box-shadow: 0px 10px 20px rgba(234, 93, 96, 0.3);
     `}
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
 `;

@@ -6,6 +6,10 @@ import Modal from "../components/Modal";
 import Icon from "../components/Icon";
 import Pokeball from "../assets/pokeball-lg.png";
 import Logo from "../assets/logo.png";
+import {
+  FilterOptionList as DefaultFilterOptionList,
+  FilterOption as DefaultFilterOption,
+} from "../components/FilterModal";
 
 function Main() {
   const [input, setInput] = useState("");
@@ -26,6 +30,9 @@ function Main() {
     setInput("");
     setKeyword("");
   };
+
+  const removeFilter = (selectedFilter) =>
+    setFilters((prev) => prev.filter((option) => option !== selectedFilter));
 
   const resetFilter = () => setFilters([]);
 
@@ -97,6 +104,23 @@ function Main() {
               />
             </Controllers>
           </SearchBar>
+          <FilterOptionList>
+            {filters.map((option) => (
+              <FilterOption
+                key={option}
+                filter={option}
+                active={true}
+                onClick={() => removeFilter(option)}
+              >
+                <img
+                  src={process.env.PUBLIC_URL + `/assets/badges/${option}.png`}
+                  alt={option}
+                />
+                <span>{option}</span>
+                <i className="fa-solid fa-xmark" />
+              </FilterOption>
+            ))}
+          </FilterOptionList>
         </Header>
 
         {pokemonList.length > 0 ? (
@@ -109,10 +133,10 @@ function Main() {
           </PokemonList>
         ) : (
           <NoList>
-            <Message>해당하는 포켓몬이 존재하지 않습니다.</Message>
+            <Message>포켓몬이 존재하지 않습니다.</Message>
             <ResetFilter onClick={resetFilter}>
               <i className="fas fa-arrow-rotate-right" />
-              <span>모든 필터 초기화</span>
+              <span>모든 검색 필터 초기화</span>
             </ResetFilter>
           </NoList>
         )}
@@ -149,7 +173,7 @@ const Wrapper = styled.div`
   padding: 20px 40px 0px;
 
   @media (max-width: 480px) {
-    padding-inline: 20px;
+    padding: 10px 20px 0px;
   }
 `;
 
@@ -227,6 +251,18 @@ const Results = styled.span`
   top: 2px;
 `;
 
+const FilterOptionList = styled(DefaultFilterOptionList)`
+  margin-bottom: 0px;
+  column-gap: 10px;
+  row-gap: 5px;
+`;
+
+const FilterOption = styled(DefaultFilterOption)`
+  i {
+    font-size: 12px;
+  }
+`;
+
 const Controllers = styled.nav`
   display: flex;
 `;
@@ -249,8 +285,10 @@ const NoList = styled.div`
 `;
 
 const Message = styled.span`
+  text-align: center;
   font-family: "HANAMDAUM";
   font-size: 16px;
+  line-height: 1.3;
 `;
 
 const ResetFilter = styled.div`

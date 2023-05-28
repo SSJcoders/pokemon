@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled, { css } from "styled-components";
 
 function FilterModal({ filters, setFilters, closeModal }) {
-  const typeOptions = [
+  const filterOptions = [
     "bug",
     "dark",
     "dragon",
@@ -45,11 +45,11 @@ function FilterModal({ filters, setFilters, closeModal }) {
   return (
     <div>
       <Title>필터</Title>
-      <TypeOptionList>
-        {typeOptions.map((option) => (
-          <TypeOption
+      <FilterOptionList>
+        {filterOptions.map((option) => (
+          <FilterOption
             key={option}
-            type={option}
+            filter={option}
             active={selected.includes(option)}
             onClick={() => handleFilter(option)}
           >
@@ -58,9 +58,9 @@ function FilterModal({ filters, setFilters, closeModal }) {
               alt={option}
             />
             <span>{option}</span>
-          </TypeOption>
+          </FilterOption>
         ))}
-      </TypeOptionList>
+      </FilterOptionList>
       <Buttons>
         <ResetButton onClick={resetFilters}>초기화</ResetButton>
         <ApplyButton onClick={applyFilters}>적용</ApplyButton>
@@ -77,14 +77,14 @@ const Title = styled.h2`
   margin-bottom: 30px;
 `;
 
-const TypeOptionList = styled.div`
+export const FilterOptionList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   margin-bottom: 30px;
 `;
 
-const TypeOption = styled.div`
+export const FilterOption = styled.div`
   width: fit-content;
   display: flex;
   align-items: center;
@@ -109,23 +109,12 @@ const TypeOption = styled.div`
     props.active &&
     css`
       color: ${(props) => props.theme.colors.white};
-      background-color: ${(props) => props.theme.typeColors[props.type]};
+      background-color: ${(props) => props.theme.typeColors[props.filter]};
 
       img {
         filter: brightness(0) invert(1);
       }
-    `}/* @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      color: ${(props) => props.theme.typeColors[props.type]};
-
-      img {
-        filter: ${(props) =>
-    "opacity(0.4) drop-shadow(0 0 0 " +
-    props.theme.typeColors[props.type] +
-    ")"};
-      }
-    }
-  } */
+    `}
 `;
 
 const Buttons = styled.div`
