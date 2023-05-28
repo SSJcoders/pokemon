@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import SortModal from "./SortModal";
 import FilterModal from "./FilterModal";
+import Icon from "./Icon";
 
 export default function Modal({ kind, closeModal, option, setOption }) {
   if (kind === "") return null;
@@ -9,6 +10,13 @@ export default function Modal({ kind, closeModal, option, setOption }) {
     <>
       <ModalOverlay onClick={closeModal}></ModalOverlay>
       <ModalContents>
+        <Header>
+          <Title>
+            {kind === "sort" && "정렬"}
+            {kind === "filter" && "필터"}
+          </Title>
+          <Icon icon="fa-xmark" size="lg" onClick={closeModal}></Icon>
+        </Header>
         {kind === "sort" ? (
           <SortModal
             sort={option}
@@ -63,4 +71,16 @@ const ModalContents = styled.div`
   padding: 40px;
   animation: ${slideIn};
   animation-duration: 0.3s;
+`;
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+`;
+
+const Title = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
 `;

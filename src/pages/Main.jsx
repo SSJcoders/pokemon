@@ -247,8 +247,6 @@ const SearchBar = styled.div`
 const Results = styled.span`
   font-family: "HANAMDAUM";
   font-size: 12px;
-  position: relative;
-  top: 2px;
 `;
 
 const FilterOptionList = styled(DefaultFilterOptionList)`

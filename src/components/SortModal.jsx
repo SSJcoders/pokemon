@@ -14,8 +14,7 @@ function SortModal({ sort, setSort, closeModal }) {
   };
 
   return (
-    <div>
-      <Title>정렬</Title>
+    <>
       {Object.keys(sortOptions).map((option) => (
         <SortOption
           key={option}
@@ -25,17 +24,11 @@ function SortModal({ sort, setSort, closeModal }) {
           {sortOptions[option]}
         </SortOption>
       ))}
-    </div>
+    </>
   );
 }
 
 export default SortModal;
-
-const Title = styled.h2`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 30px;
-`;
 
 const SortOption = styled.button`
   width: 100%;

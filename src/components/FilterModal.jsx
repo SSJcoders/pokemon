@@ -43,8 +43,7 @@ function FilterModal({ filters, setFilters, closeModal }) {
   };
 
   return (
-    <div>
-      <Title>필터</Title>
+    <>
       <FilterOptionList>
         {filterOptions.map((option) => (
           <FilterOption
@@ -65,17 +64,11 @@ function FilterModal({ filters, setFilters, closeModal }) {
         <ResetButton onClick={resetFilters}>초기화</ResetButton>
         <ApplyButton onClick={applyFilters}>적용</ApplyButton>
       </Buttons>
-    </div>
+    </>
   );
 }
 
 export default FilterModal;
-
-const Title = styled.h2`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 30px;
-`;
 
 export const FilterOptionList = styled.div`
   display: flex;
