@@ -35,7 +35,11 @@ function Home() {
   const removeFilter = (selectedFilter) =>
     setFilters((prev) => prev.filter((option) => option !== selectedFilter));
 
-  const resetFilter = () => setFilters([]);
+  const resetSearchFilter = () => {
+    setInput("");
+    setKeyword("");
+    setFilters([]);
+  };
 
   const [loading, initialPokemonList] = usePokemon();
 
@@ -77,7 +81,7 @@ function Home() {
     <Container>
       <Header>
         <NavBar>
-          <Icon size="lg" icon="fa-moon" />
+          <Icon size="lg" icon="fa-globe" />
           <Icon size="lg" icon="fa-heart" />
         </NavBar>
         <Title onClick={() => window.location.reload()}>
@@ -146,10 +150,10 @@ function Home() {
           ) : (
             <NoList>
               <Message>포켓몬이 존재하지 않습니다.</Message>
-              <ResetFilter onClick={resetFilter}>
+              <ResetSearchFilter onClick={resetSearchFilter}>
                 <i className="fas fa-arrow-rotate-right" />
                 <span>모든 검색 필터 초기화</span>
-              </ResetFilter>
+              </ResetSearchFilter>
             </NoList>
           )}
         </>
@@ -176,8 +180,7 @@ const Container = styled.div`
   max-width: 480px;
   min-height: 100vh;
   margin: 0 auto;
-  background: ${(props) => props.theme.colors.bg} url(${Pokeball}) no-repeat
-    center -10px / contain;
+  background-color: ${(props) => props.theme.colors.white};
   position: relative;
 `;
 
@@ -185,7 +188,9 @@ const Header = styled.header`
   position: sticky;
   top: 0;
   padding: 10px 30px;
-  background-color: ${(props) => props.theme.colors.bg};
+  background-color: ${(props) => props.theme.colors.white};
+  background: ${(props) => props.theme.colors.white} url(${Pokeball}) no-repeat
+    center top / 105%;
   z-index: 1;
 
   @media (max-width: 480px) {
@@ -309,7 +314,7 @@ const Message = styled.span`
   line-height: 1.3;
 `;
 
-const ResetFilter = styled.div`
+const ResetSearchFilter = styled.div`
   display: flex;
   align-items: center;
   column-gap: 10px;

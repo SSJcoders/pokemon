@@ -15,7 +15,7 @@ export default function Modal({ kind, closeModal, option, setOption }) {
             {kind === "sort" && "정렬"}
             {kind === "filter" && "필터"}
           </Title>
-          <Icon icon="fa-xmark" size="lg" onClick={closeModal}></Icon>
+          <Icon icon="fa-x" size="lg" onClick={closeModal}></Icon>
         </Header>
         {kind === "sort" ? (
           <SortModal
