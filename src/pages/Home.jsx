@@ -10,8 +10,9 @@ import {
   FilterOptionList as DefaultFilterOptionList,
   FilterOption as DefaultFilterOption,
 } from "../components/FilterModal";
+import Loader from "../components/Loader";
 
-function Main() {
+function Home() {
   const [input, setInput] = useState("");
   const [keyword, setKeyword] = useState("");
 
@@ -36,7 +37,9 @@ function Main() {
 
   const resetFilter = () => setFilters([]);
 
-  const pokemonList = usePokemon()
+  const [loading, initialPokemonList] = usePokemon();
+
+  const pokemonList = initialPokemonList
     // 검색
     .filter(({ names, id }) => {
       return names["kr"].includes(keyword) || id === Number(keyword);
@@ -72,81 +75,85 @@ function Main() {
 
   return (
     <Container>
-      <Wrapper>
-        <Header>
-          <NavBar>
-            <Icon size="lg" icon="fa-moon" />
-            <Icon size="lg" icon="fa-heart" />
-          </NavBar>
-          <Title onClick={() => window.location.reload()}>
-            <TitleLogo src={Logo} alt="포켓몬도감 로고" />
-            <TitleText>포켓몬도감</TitleText>
-          </Title>
-          <SearchForm>
-            <Icon size="md" icon="fa-magnifying-glass" />
-            <Input
-              type="text"
-              placeholder="포켓몬 이름 또는 번호를 입력하세요."
-              value={input}
-              onChange={handleSearchInput}
-            ></Input>
+      <Header>
+        <NavBar>
+          <Icon size="lg" icon="fa-moon" />
+          <Icon size="lg" icon="fa-heart" />
+        </NavBar>
+        <Title onClick={() => window.location.reload()}>
+          <TitleLogo src={Logo} alt="포켓몬도감 로고" />
+          <TitleText>포켓몬도감</TitleText>
+        </Title>
+        <SearchForm>
+          <Icon size="md" icon="fa-magnifying-glass" />
+          <Input
+            type="text"
+            placeholder="포켓몬 이름 또는 번호를 입력하세요."
+            value={input}
+            onChange={handleSearchInput}
+          ></Input>
+          <Icon
+            size="md"
+            icon="fa-xmark"
+            onClick={resetSearchInput}
+            hide={input === ""}
+          />
+        </SearchForm>
+        <SearchBar>
+          <Results hide={loading}>총 {pokemonList.length}마리 포켓몬</Results>
+          <Controllers>
             <Icon
               size="md"
-              icon="fa-xmark"
-              onClick={resetSearchInput}
-              hide={input === ""}
+              icon="fa-arrow-down-short-wide"
+              onClick={() => setModal("sort")}
             />
-          </SearchForm>
-          <SearchBar>
-            <Results>총 {pokemonList.length}마리 포켓몬</Results>
-            <Controllers>
-              <Icon
-                size="md"
-                icon="fa-arrow-down-short-wide"
-                onClick={() => setModal("sort")}
+            <Icon
+              size="md"
+              icon="fa-sliders"
+              onClick={() => setModal("filter")}
+            />
+          </Controllers>
+        </SearchBar>
+        <FilterOptionList>
+          {filters.map((option) => (
+            <FilterOption
+              key={option}
+              filter={option}
+              active={true}
+              onClick={() => removeFilter(option)}
+            >
+              <img
+                src={process.env.PUBLIC_URL + `/assets/badges/${option}.png`}
+                alt={option}
               />
-              <Icon
-                size="md"
-                icon="fa-sliders"
-                onClick={() => setModal("filter")}
-              />
-            </Controllers>
-          </SearchBar>
-          <FilterOptionList>
-            {filters.map((option) => (
-              <FilterOption
-                key={option}
-                filter={option}
-                active={true}
-                onClick={() => removeFilter(option)}
-              >
-                <img
-                  src={process.env.PUBLIC_URL + `/assets/badges/${option}.png`}
-                  alt={option}
-                />
-                <span>{option}</span>
-                <i className="fa-solid fa-xmark" />
-              </FilterOption>
-            ))}
-          </FilterOptionList>
-        </Header>
+              <span>{option}</span>
+              <i className="fa-solid fa-xmark" />
+            </FilterOption>
+          ))}
+        </FilterOptionList>
+      </Header>
 
-        {pokemonList.length > 0 ? (
-          <PokemonList>
-            {pokemonList?.map((pokemon) => (
-              <PokemonItem key={pokemon.name} pokemon={pokemon} />
-            ))}
-          </PokemonList>
-        ) : (
-          <NoList>
-            <Message>포켓몬이 존재하지 않습니다.</Message>
-            <ResetFilter onClick={resetFilter}>
-              <i className="fas fa-arrow-rotate-right" />
-              <span>모든 검색 필터 초기화</span>
-            </ResetFilter>
-          </NoList>
-        )}
-      </Wrapper>
+      {loading ? (
+        <Loader />
+      ) : (
+        <>
+          {pokemonList?.length > 0 ? (
+            <PokemonList>
+              {pokemonList?.map((pokemon) => (
+                <PokemonItem key={pokemon.name} pokemon={pokemon} />
+              ))}
+            </PokemonList>
+          ) : (
+            <NoList>
+              <Message>포켓몬이 존재하지 않습니다.</Message>
+              <ResetFilter onClick={resetFilter}>
+                <i className="fas fa-arrow-rotate-right" />
+                <span>모든 검색 필터 초기화</span>
+              </ResetFilter>
+            </NoList>
+          )}
+        </>
+      )}
 
       <Modal
         kind={modal}
@@ -160,31 +167,30 @@ function Main() {
   );
 }
 
-export default Main;
+export default Home;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   max-width: 480px;
+  min-height: 100vh;
   margin: 0 auto;
   background: ${(props) => props.theme.colors.bg} url(${Pokeball}) no-repeat
     center -10px / contain;
   position: relative;
-  overflow: hidden;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  padding: 20px 40px 0px;
-
-  @media (max-width: 480px) {
-    padding: 10px 20px 0px;
-  }
 `;
 
 const Header = styled.header`
-  margin-bottom: 10px;
+  position: sticky;
+  top: 0;
+  padding: 10px 30px;
+  background-color: ${(props) => props.theme.colors.bg};
+  z-index: 1;
+
+  @media (max-width: 480px) {
+    padding: 10px 20px;
+  }
 `;
 
 const NavBar = styled.nav`
@@ -197,7 +203,7 @@ const NavBar = styled.nav`
 const Title = styled.div`
   display: inline-flex;
   column-gap: 7.5px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   cursor: pointer;
 
   @media (max-width: 320px) {
@@ -219,7 +225,7 @@ const SearchForm = styled.form`
   display: flex;
   align-items: center;
   padding: 9px 18px;
-  background-color: #f4f5f5;
+  background-color: ${(props) => props.theme.colors.lightgray};
   border-radius: 10px;
   margin-bottom: 10px;
 
@@ -234,7 +240,8 @@ const Input = styled.input`
   border: none;
   outline: none;
   background-color: transparent;
-  font-family: "HANAMDAUM";
+  font-family: inherit;
+  font-size: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
 
@@ -252,13 +259,15 @@ const SearchBar = styled.div`
 
 const Results = styled.span`
   font-family: "HANAMDAUM";
-  font-size: 12px;
+  font-size: 14px;
+  visibility: ${(props) => props.hide && "hidden"};
 `;
 
 const FilterOptionList = styled(DefaultFilterOptionList)`
   margin-bottom: 0px;
   column-gap: 10px;
   row-gap: 5px;
+  padding: 0 6px;
 `;
 
 const FilterOption = styled(DefaultFilterOption)`
@@ -271,9 +280,13 @@ const Controllers = styled.nav`
   display: flex;
 `;
 
-const PokemonList = styled.main`
-  padding: 20px 0;
+const PokemonList = styled.div`
+  padding: 0px 30px 20px;
   overflow: auto;
+
+  @media (max-width: 480px) {
+    padding: 0px 20px 20px;
+  }
 
   &::-webkit-scrollbar {
     display: none;
@@ -281,10 +294,11 @@ const PokemonList = styled.main`
 `;
 
 const NoList = styled.div`
-  margin: auto 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   row-gap: 20px;
 `;
 

@@ -43,7 +43,7 @@ const ModalOverlay = styled.div`
   left: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  z-index: 9;
 `;
 
 const slideIn = keyframes`
@@ -67,7 +67,7 @@ const ModalContents = styled.div`
   background-color: white;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
-  z-index: 1;
+  z-index: 9;
   padding: 40px;
   animation: ${slideIn};
   animation-duration: 0.3s;

@@ -1,7 +1,7 @@
 import { ThemeProvider, createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import theme from "./theme";
-import Main from "./pages/Main";
+import Home from "./pages/Home";
 import PretendardWoff2 from "./fonts/Pretendard-Regular.woff2";
 import PretendardWoff from "./fonts/Pretendard-Regular.woff";
 
@@ -36,7 +36,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Main />
+      <Home />
     </ThemeProvider>
   );
 }

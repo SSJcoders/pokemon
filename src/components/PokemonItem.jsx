@@ -40,6 +40,14 @@ const Wrapper = styled.div`
   background-repeat: no-repeat;
   background-position: 40% 5px, right 0px;
   position: relative;
+
+  &:first-child {
+    margin-top: 20px;
+  }
+
+  &:last-child {
+    margin-bottom: 0px;
+  }
 `;
 
 const Number = styled.span`

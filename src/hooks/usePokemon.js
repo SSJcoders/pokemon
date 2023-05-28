@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 function usePokemon() {
+  const [loading, setLoading] = useState(true);
   const [pokemonList, setPokemonList] = useState([]);
 
   useEffect(() => {
@@ -22,6 +23,9 @@ function usePokemon() {
       langRequests.push(fetch(langUrl));
     }
 
+    setLoading(true);
+    setPokemonList([]);
+
     Promise.all(langRequests)
       .then((responses) => Promise.all(responses.map((res) => res.json())))
       .then((results) => {
@@ -39,15 +43,13 @@ function usePokemon() {
                 names: { kr: koreanNames[idx], en: englishNames[idx] },
               })
             );
-
+            setLoading(false);
             setPokemonList(pokemons);
           });
       });
-
-    return () => setPokemonList([]);
   }, []);
 
-  return pokemonList;
+  return [loading, pokemonList];
 }
 
 export default usePokemon;
