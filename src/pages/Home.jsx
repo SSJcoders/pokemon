@@ -51,7 +51,9 @@ function Home() {
     // 필터링
     .filter(({ types }) => {
       const myTypes = types.map((type) => type.type.name);
-      return filters.every((filter) => myTypes.includes(filter));
+      return filters.length > 0
+        ? myTypes.some((myType) => filters.includes(myType))
+        : true;
     })
     // 정렬
     .sort((a, b) => {
