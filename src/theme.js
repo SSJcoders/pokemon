@@ -5,6 +5,7 @@ const colors = {
   number: "#17171b60",
   primary: "#EA5D60",
   secondary: "#F2F2F2",
+  autocompleteHover: "#F8F9FA",
 };
 
 const typeColors = {

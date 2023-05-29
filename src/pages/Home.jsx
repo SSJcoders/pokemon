@@ -15,21 +15,35 @@ import Loader from "../components/Loader";
 function Home() {
   const [input, setInput] = useState("");
   const [keyword, setKeyword] = useState("");
+  const [autocompleteList, setAutocompleteList] = useState([]);
 
   const [sort, setSort] = useState("num_asc");
   const [filters, setFilters] = useState([]);
 
   const [modal, setModal] = useState("");
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    setKeyword(input.toLowerCase());
+  };
+
   const handleSearchInput = (e) => {
     const searchInput = e.target.value;
     setInput(searchInput);
-    setKeyword(searchInput.toLowerCase());
+
+    setAutocompleteList(
+      searchInput.length > 0
+        ? initialPokemonList.filter(({ names }) => {
+            return names["kr"].startsWith(searchInput);
+          })
+        : []
+    );
   };
 
   const resetSearchInput = () => {
     setInput("");
     setKeyword("");
+    setAutocompleteList([]);
   };
 
   const removeFilter = (selectedFilter) =>
@@ -94,24 +108,51 @@ function Home() {
           <TitleLogo src={Logo} alt="포켓몬도감 로고" />
           <TitleText>포켓몬도감</TitleText>
         </Title>
-        <SearchForm>
-          <Icon size="md" icon="fa-magnifying-glass" />
-          <Input
-            type="text"
-            placeholder="포켓몬 이름 또는 번호를 입력하세요."
-            value={input}
-            onChange={handleSearchInput}
-          ></Input>
-          <Icon
-            size="md"
-            icon="fa-xmark"
-            onClick={resetSearchInput}
-            hide={input === ""}
-          />
+        <SearchForm onSubmit={handleSearchSubmit}>
+          <SearchBar>
+            <Icon size="md" icon="fa-magnifying-glass" />
+            <Input
+              type="text"
+              placeholder="포켓몬 이름 또는 번호를 입력하세요."
+              value={input}
+              onChange={handleSearchInput}
+            ></Input>
+            <Icon
+              size="md"
+              icon="fa-xmark"
+              onClick={resetSearchInput}
+              hide={input === ""}
+            />
+          </SearchBar>
+          {input.length > 0 && autocompleteList.length > 0 ? (
+            <SearchDropdown>
+              {autocompleteList.map((word) => {
+                return (
+                  <SearchDropdownItem isHover={true}>
+                    <img
+                      src={word.sprites.front_default}
+                      alt={word.names["kr"]}
+                    />
+                    <span> {word.names["kr"]}</span>
+                    <Icon size="md" icon="fa-chevron-right" />
+                  </SearchDropdownItem>
+                );
+              })}
+            </SearchDropdown>
+          ) : null}
+          {input.length > 0 && autocompleteList.length === 0 ? (
+            <SearchDropdown>
+              <SearchDropdownItem isHover={false}>
+                <Icon size="md" icon="fa-magnifying-glass" />
+                <span>검색 결과가 없습니다.</span>
+              </SearchDropdownItem>
+            </SearchDropdown>
+          ) : null}
         </SearchForm>
-        <SearchBar>
+
+        <SearchResultController>
           <Results hide={loading}>총 {pokemonList.length}마리 포켓몬</Results>
-          <Controllers>
+          <Controller>
             <Icon
               size="md"
               icon="fa-arrow-down-short-wide"
@@ -122,8 +163,8 @@ function Home() {
               icon="fa-sliders"
               onClick={() => setModal("filter")}
             />
-          </Controllers>
-        </SearchBar>
+          </Controller>
+        </SearchResultController>
         <FilterOptionList>
           {filters.map((option) => (
             <FilterOption
@@ -194,7 +235,6 @@ const Header = styled.header`
   position: sticky;
   top: 0;
   padding: 10px 30px;
-  background-color: ${(props) => props.theme.colors.white};
   background: ${(props) => props.theme.colors.white} url(${Pokeball}) no-repeat
     center top / 105%;
   z-index: 1;
@@ -234,14 +274,70 @@ const TitleText = styled.h1`
 const SearchForm = styled.form`
   width: 100%;
   display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  position: relative;
+`;
+
+const SearchBar = styled.div`
+  width: 100%;
+  display: flex;
   align-items: center;
   padding: 9px 18px;
   background-color: ${(props) => props.theme.colors.lightgray};
   border-radius: 10px;
-  margin-bottom: 10px;
 
   @media (max-width: 480px) {
     padding: 9px;
+  }
+`;
+
+const SearchDropdown = styled.ul`
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  padding: 5px 0;
+  display: flex;
+  flex-direction: column;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border: 1px solid ${(props) => props.theme.colors.lightgray};
+  border-top: none;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  background-color: ${(props) => props.theme.colors.white};
+  z-index: 1;
+`;
+
+const SearchDropdownItem = styled.li`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  font-size: 16px;
+  line-height: 40px;
+  cursor: pointer;
+
+  img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+  }
+
+  i {
+    color: ${(props) => props.theme.colors.gray};
+  }
+
+  span {
+    width: 100%;
+    margin-left: 9px;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: ${(props) =>
+        props.isHover ? props.theme.colors.autocompleteHover : null};
+    }
   }
 `;
 
@@ -261,7 +357,7 @@ const Input = styled.input`
   }
 `;
 
-const SearchBar = styled.div`
+const SearchResultController = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -287,7 +383,7 @@ const FilterOption = styled(DefaultFilterOption)`
   }
 `;
 
-const Controllers = styled.nav`
+const Controller = styled.nav`
   display: flex;
 `;
 
