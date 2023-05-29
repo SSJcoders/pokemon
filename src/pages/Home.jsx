@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import usePokemon from "../hooks/usePokemon";
 import PokemonItem from "../components/PokemonItem";
@@ -40,6 +40,10 @@ function Home() {
     setKeyword("");
     setFilters([]);
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [sort, filters]);
 
   const [loading, initialPokemonList] = usePokemon();
 
