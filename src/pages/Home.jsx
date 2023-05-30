@@ -164,7 +164,10 @@ function Home() {
                       src={pokemon.sprites.front_default}
                       alt={pokemon.names["kr"]}
                     />
-                    <span> {pokemon.names["kr"]}</span>
+                    <div>
+                      <strong>{input}</strong>
+                      <span>{pokemon.names["kr"].split(input)[1]}</span>
+                    </div>
                     <Icon size="md" icon="fa-chevron-right" />
                   </SearchDropdownItem>
                 );
@@ -350,9 +353,12 @@ const SearchDropdownItem = styled.li`
     color: ${(props) => props.theme.colors.gray};
   }
 
-  span {
+  div {
     width: 100%;
     margin-left: 9px;
+    strong {
+      color: ${(props) => props.theme.colors.primary};
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {
