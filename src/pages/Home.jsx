@@ -336,6 +336,10 @@ const SearchDropdownItem = styled.li`
   line-height: 40px;
   cursor: pointer;
 
+  @media (max-width: 480px) {
+    padding: 0 8px 0 9px;
+  }
+
   img {
     width: 30px;
     height: 30px;
@@ -369,6 +373,11 @@ const Input = styled.input`
   font-size: 16px;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  &:placeholder-shown {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   @media (max-width: 480px) {
     margin-left: 4.5px;
