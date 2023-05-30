@@ -199,6 +199,9 @@ function Home() {
           {isDropdownVisible && (
             <SearchDropdown>
               {autocompleteList.map((pokemon, idx) => {
+                const notMatchedPokemonName = pokemon.names["kr"].substr(
+                  input.length
+                );
                 return (
                   <SearchDropdownItem
                     key={pokemon.name}
@@ -211,7 +214,7 @@ function Home() {
                     />
                     <p>
                       <strong>{input}</strong>
-                      <span>{pokemon.names["kr"].split(input)[1]}</span>
+                      <span>{notMatchedPokemonName}</span>
                     </p>
                     <Icon size="md" icon="fa-chevron-right" />
                   </SearchDropdownItem>
