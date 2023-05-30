@@ -18,6 +18,7 @@ function Home() {
   const [query, setQuery] = useState("");
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [autocompleteList, setAutocompleteList] = useState([]);
+  const [selectedDropdownItemIdx, setSelectedDropdownItemIdx] = useState(-1);
 
   // 정렬, 필터 관련 state
   const [modal, setModal] = useState("");
@@ -83,23 +84,61 @@ function Home() {
   // 검색폼 제출 시 검색 실행
   const runQuery = (e) => {
     e.preventDefault();
-    setQuery(input.toLowerCase());
+
+    if (isDropdownVisible && selectedDropdownItemIdx >= 0) {
+      const selectedPokemonName =
+        autocompleteList[selectedDropdownItemIdx].names["kr"];
+      setInput(selectedPokemonName);
+      setQuery(selectedPokemonName);
+    } else {
+      setQuery(input.toLowerCase());
+    }
+
     setIsDropdownVisible(false);
+    setSelectedDropdownItemIdx(-1);
   };
 
   // 자동완성 포켓몬 클릭 시 검색 실행
-  const runQueryByClickAutocomplete = (pokemon) => {
+  const runQueryByAutocompleteClick = (pokemon) => {
     const name = pokemon.names["kr"];
     setInput(name);
     setQuery(name);
     setIsDropdownVisible(false);
   };
 
-  // 검색창의 x 버튼 눌렀을 때 검색 초기화
+  // 키보드 방향키로 자동완성 선택
+  const selectDropdownItem = (e) => {
+    if (!isDropdownVisible || autocompleteList.length === 0) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+
+      setSelectedDropdownItemIdx((prev) =>
+        selectedDropdownItemIdx === autocompleteList.length - 1 ? 0 : prev + 1
+      );
+    }
+
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+
+      if (autocompleteList.length === 1) {
+        setSelectedDropdownItemIdx(-1);
+        setIsDropdownVisible(false);
+        return;
+      }
+
+      setSelectedDropdownItemIdx((prev) =>
+        selectedDropdownItemIdx === 0 ? autocompleteList.length - 1 : prev - 1
+      );
+    }
+  };
+
+  // 검색창의 x 버튼 눌렀을 때 검색창 초기화
   const resetSearch = () => {
     setInput("");
-    setQuery("");
     setIsDropdownVisible(false);
+    setAutocompleteList([]);
+    setSelectedDropdownItemIdx(-1);
   };
 
   // 선택된 필터 삭제
@@ -107,21 +146,26 @@ function Home() {
     setFilters((prev) => prev.filter((option) => option !== selectedFilter));
   };
 
-  // 정렬, 필터 변경 시 화면 상단으로 이동
+  // 정렬, 필터, 검색어 변경 시 화면 상단으로 이동
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [sort, filters]);
+  }, [sort, filters, query]);
 
   // 검색폼 바깥 영역 클릭 시 드롭다운 닫기
   const searchFormRef = useRef(null);
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (searchFormRef.current && !searchFormRef.current.contains(e.target)) {
+    const handleClick = (e) => {
+      if (!searchFormRef.current) return;
+
+      if (!searchFormRef.current.contains(e.target)) {
         setIsDropdownVisible(false);
+        setSelectedDropdownItemIdx(-1);
+      } else {
+        setIsDropdownVisible(true);
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handleClick);
   }, []);
 
   return (
@@ -138,12 +182,13 @@ function Home() {
         <SearchForm onSubmit={runQuery} ref={searchFormRef} autoComplete="off">
           <SearchBar>
             <Icon size="md" icon="fa-magnifying-glass" />
-            <Input
+            <SearchInput
               type="text"
               placeholder="포켓몬 이름 또는 번호를 입력하세요."
               value={input}
               onChange={matchAutocomplete}
-            ></Input>
+              onKeyDown={selectDropdownItem}
+            ></SearchInput>
             <Icon
               size="md"
               icon="fa-xmark"
@@ -153,21 +198,21 @@ function Home() {
           </SearchBar>
           {isDropdownVisible && (
             <SearchDropdown>
-              {autocompleteList.map((pokemon) => {
+              {autocompleteList.map((pokemon, idx) => {
                 return (
                   <SearchDropdownItem
                     key={pokemon.name}
-                    isHover={true}
-                    onClick={() => runQueryByClickAutocomplete(pokemon)}
+                    isSelected={idx === selectedDropdownItemIdx}
+                    onClick={() => runQueryByAutocompleteClick(pokemon)}
                   >
                     <img
                       src={pokemon.sprites.front_default}
                       alt={pokemon.names["kr"]}
                     />
-                    <div>
+                    <p>
                       <strong>{input}</strong>
                       <span>{pokemon.names["kr"].split(input)[1]}</span>
-                    </div>
+                    </p>
                     <Icon size="md" icon="fa-chevron-right" />
                   </SearchDropdownItem>
                 );
@@ -333,6 +378,7 @@ const SearchDropdownItem = styled.li`
   width: 100%;
   height: 40px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 0 16px 0 18px;
   font-size: 16px;
@@ -353,23 +399,25 @@ const SearchDropdownItem = styled.li`
     color: ${(props) => props.theme.colors.gray};
   }
 
-  div {
-    width: 100%;
+  p {
+    flex: 1;
     margin-left: 9px;
     strong {
       color: ${(props) => props.theme.colors.primary};
     }
   }
 
+  background-color: ${(props) =>
+    props.isSelected && props.theme.colors.autocompleteHover};
+
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      background-color: ${(props) =>
-        props.isHover ? props.theme.colors.autocompleteHover : null};
+      background-color: ${(props) => props.theme.colors.autocompleteHover};
     }
   }
 `;
 
-const Input = styled.input`
+const SearchInput = styled.input`
   width: 100%;
   margin-left: 9px;
   border: none;
