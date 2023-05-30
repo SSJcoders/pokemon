@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import usePokemon from "../hooks/usePokemon";
 import PokemonItem from "../components/PokemonItem";
 import Modal from "../components/Modal";
+import Loader from "../components/Loader";
 import Icon from "../components/Icon";
 import Pokeball from "../assets/pokeball-lg.png";
 import Logo from "../assets/logo.png";
@@ -10,67 +11,31 @@ import {
   FilterOptionList as DefaultFilterOptionList,
   FilterOption as DefaultFilterOption,
 } from "../components/FilterModal";
-import Loader from "../components/Loader";
 
 function Home() {
+  // 검색 관련 state
   const [input, setInput] = useState("");
-  const [keyword, setKeyword] = useState("");
+  const [query, setQuery] = useState("");
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const [autocompleteList, setAutocompleteList] = useState([]);
 
+  // 정렬, 필터 관련 state
+  const [modal, setModal] = useState("");
   const [sort, setSort] = useState("num_asc");
   const [filters, setFilters] = useState([]);
 
-  const [modal, setModal] = useState("");
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    setKeyword(input.toLowerCase());
-  };
-
-  const handleSearchInput = (e) => {
-    const searchInput = e.target.value;
-    setInput(searchInput);
-
-    setAutocompleteList(
-      searchInput.length > 0
-        ? initialPokemonList.filter(({ names }) => {
-            return names["kr"].startsWith(searchInput);
-          })
-        : []
-    );
-  };
-
-  const resetSearchInput = () => {
-    setInput("");
-    setKeyword("");
-    setAutocompleteList([]);
-  };
-
-  const removeFilter = (selectedFilter) =>
-    setFilters((prev) => prev.filter((option) => option !== selectedFilter));
-
-  const resetSearchFilter = () => {
-    setInput("");
-    setKeyword("");
-    setFilters([]);
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [sort, filters]);
-
+  // 검색, 필터, 정렬을 반영한 포켓몬 목록
   const [loading, initialPokemonList] = usePokemon();
-
   const pokemonList = initialPokemonList
     // 검색
     .filter(({ names, id }) => {
-      return names["kr"].includes(keyword) || id === Number(keyword);
+      return names["kr"].includes(query) || id === Number(query);
     })
-    // 필터링
+    // 필터
     .filter(({ types }) => {
       const myTypes = types.map((type) => type.type.name);
       return filters.length > 0
-        ? myTypes.some((myType) => filters.includes(myType))
+        ? filters.some((filter) => myTypes.includes(filter))
         : true;
     })
     // 정렬
@@ -97,6 +62,68 @@ function Home() {
       }
     });
 
+  // 검색어 입력 시 자동완성 매칭
+  const matchAutocomplete = (e) => {
+    const searchInput = e.target.value;
+    setInput(searchInput);
+
+    if (searchInput.length > 0) {
+      setIsDropdownVisible(true);
+      setAutocompleteList(
+        initialPokemonList.filter(({ names }) => {
+          return names["kr"].startsWith(searchInput);
+        })
+      );
+    } else {
+      setIsDropdownVisible(false);
+      setAutocompleteList([]);
+    }
+  };
+
+  // 검색폼 제출 시 검색 실행
+  const runQuery = (e) => {
+    e.preventDefault();
+    setQuery(input.toLowerCase());
+    setIsDropdownVisible(false);
+  };
+
+  // 자동완성 포켓몬 클릭 시 검색 실행
+  const runQueryByClickAutocomplete = (pokemon) => {
+    const name = pokemon.names["kr"];
+    setInput(name);
+    setQuery(name);
+    setIsDropdownVisible(false);
+  };
+
+  // 검색창의 x 버튼 눌렀을 때 검색 초기화
+  const resetSearch = () => {
+    setInput("");
+    setQuery("");
+    setIsDropdownVisible(false);
+  };
+
+  // 선택된 필터 삭제
+  const removeSelectedFilter = (selectedFilter) => {
+    setFilters((prev) => prev.filter((option) => option !== selectedFilter));
+  };
+
+  // 정렬, 필터 변경 시 화면 상단으로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [sort, filters]);
+
+  // 검색폼 바깥 영역 클릭 시 드롭다운 닫기
+  const searchFormRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (searchFormRef.current && !searchFormRef.current.contains(e.target)) {
+        setIsDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <Container>
       <Header>
@@ -108,48 +135,43 @@ function Home() {
           <TitleLogo src={Logo} alt="포켓몬도감 로고" />
           <TitleText>포켓몬도감</TitleText>
         </Title>
-        <SearchForm onSubmit={handleSearchSubmit}>
+        <SearchForm onSubmit={runQuery} ref={searchFormRef} autoComplete="off">
           <SearchBar>
             <Icon size="md" icon="fa-magnifying-glass" />
             <Input
               type="text"
               placeholder="포켓몬 이름 또는 번호를 입력하세요."
               value={input}
-              onChange={handleSearchInput}
+              onChange={matchAutocomplete}
             ></Input>
             <Icon
               size="md"
               icon="fa-xmark"
-              onClick={resetSearchInput}
+              onClick={resetSearch}
               hide={input === ""}
             />
           </SearchBar>
-          {input.length > 0 && autocompleteList.length > 0 ? (
+          {isDropdownVisible && (
             <SearchDropdown>
-              {autocompleteList.map((word) => {
+              {autocompleteList.map((pokemon) => {
                 return (
-                  <SearchDropdownItem isHover={true}>
+                  <SearchDropdownItem
+                    key={pokemon.name}
+                    isHover={true}
+                    onClick={() => runQueryByClickAutocomplete(pokemon)}
+                  >
                     <img
-                      src={word.sprites.front_default}
-                      alt={word.names["kr"]}
+                      src={pokemon.sprites.front_default}
+                      alt={pokemon.names["kr"]}
                     />
-                    <span> {word.names["kr"]}</span>
+                    <span> {pokemon.names["kr"]}</span>
                     <Icon size="md" icon="fa-chevron-right" />
                   </SearchDropdownItem>
                 );
               })}
             </SearchDropdown>
-          ) : null}
-          {input.length > 0 && autocompleteList.length === 0 ? (
-            <SearchDropdown>
-              <SearchDropdownItem isHover={false}>
-                <Icon size="md" icon="fa-magnifying-glass" />
-                <span>검색 결과가 없습니다.</span>
-              </SearchDropdownItem>
-            </SearchDropdown>
-          ) : null}
+          )}
         </SearchForm>
-
         <SearchResultController>
           <Results hide={loading}>총 {pokemonList.length}마리 포켓몬</Results>
           <Controller>
@@ -171,7 +193,7 @@ function Home() {
               key={option}
               filter={option}
               active={true}
-              onClick={() => removeFilter(option)}
+              onClick={() => removeSelectedFilter(option)}
             >
               <img
                 src={process.env.PUBLIC_URL + `/assets/badges/${option}.png`}
@@ -196,11 +218,7 @@ function Home() {
             </PokemonList>
           ) : (
             <NoList>
-              <Message>포켓몬이 존재하지 않습니다.</Message>
-              <ResetSearchFilter onClick={resetSearchFilter}>
-                <i className="fas fa-arrow-rotate-right" />
-                <span>모든 검색 필터 초기화</span>
-              </ResetSearchFilter>
+              <p>포켓몬이 존재하지 않습니다.</p>
             </NoList>
           )}
         </>
@@ -296,7 +314,6 @@ const SearchDropdown = styled.ul`
   position: absolute;
   top: 50px;
   width: 100%;
-  padding: 5px 0;
   display: flex;
   flex-direction: column;
   border-bottom-left-radius: 10px;
@@ -306,6 +323,7 @@ const SearchDropdown = styled.ul`
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   background-color: ${(props) => props.theme.colors.white};
   z-index: 1;
+  overflow: hidden;
 `;
 
 const SearchDropdownItem = styled.li`
@@ -313,7 +331,7 @@ const SearchDropdownItem = styled.li`
   height: 40px;
   display: flex;
   align-items: center;
-  padding: 0 18px;
+  padding: 0 16px 0 18px;
   font-size: 16px;
   line-height: 40px;
   cursor: pointer;
@@ -403,31 +421,14 @@ const PokemonList = styled.div`
 const NoList = styled.div`
   flex: 1;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  row-gap: 20px;
-`;
-
-const Message = styled.span`
-  text-align: center;
-  font-family: "HANAMDAUM";
-  font-size: 16px;
-  line-height: 1.3;
-`;
-
-const ResetSearchFilter = styled.div`
-  display: flex;
   align-items: center;
-  column-gap: 10px;
-  padding: 15px;
-  border: 1px solid ${(props) => props.theme.colors.secondary};
-  border-radius: 10px;
-  color: ${(props) => props.theme.colors.gray};
-  font-size: 16px;
-  cursor: pointer;
 
-  i {
-    font-size: 12px;
+  p {
+    height: min-content;
+    font-family: "HANAMDAUM";
+    font-size: 16px;
+    line-height: 1.3;
+    text-align: center;
   }
 `;
