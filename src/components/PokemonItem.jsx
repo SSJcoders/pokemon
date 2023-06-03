@@ -1,13 +1,14 @@
+import React from "react";
 import styled, { keyframes } from "styled-components";
 import Pokeball from "../assets/pokeball-sm.png";
 import Pattern from "../assets/pattern.png";
 
-function PokemonItem({ pokemon }) {
+function PokemonItem({ pokemon }, ref) {
   const { id, names, types, sprites } = pokemon;
   const majorType = pokemon.types[0].type.name;
 
   return (
-    <Wrapper majorType={majorType}>
+    <Wrapper majorType={majorType} ref={ref}>
       <Number>{"#" + String(id).padStart(4, "0")}</Number>
       <Name>{names["kr"]}</Name>
       <Types>
@@ -26,7 +27,7 @@ function PokemonItem({ pokemon }) {
   );
 }
 
-export default PokemonItem;
+export default React.forwardRef(PokemonItem);
 
 const Wrapper = styled.div`
   width: 100%;

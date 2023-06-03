@@ -11,6 +11,7 @@ import {
   FilterOptionList as DefaultFilterOptionList,
   FilterOption as DefaultFilterOption,
 } from "../components/FilterModal";
+import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
 function Home() {
   // 검색 관련 state
@@ -26,7 +27,7 @@ function Home() {
   const [filters, setFilters] = useState([]);
 
   // 검색, 필터, 정렬을 반영한 포켓몬 목록
-  const [loading, initialPokemonList] = usePokemon();
+  const [isLoading, initialPokemonList] = usePokemon();
   const pokemonList = initialPokemonList
     // 검색
     .filter(({ names, id }) => {
@@ -62,6 +63,12 @@ function Home() {
           return a.id - b.id;
       }
     });
+
+  // 무한스크롤 관련
+  const OFFSET = 20;
+  const [page, setPage] = useState(1);
+  const hasMorePage = Boolean(pokemonList.length > page * OFFSET);
+  const lastElementRef = useInfiniteScroll(isLoading, hasMorePage, setPage);
 
   // 검색어 입력 시 자동완성 매칭
   const matchAutocomplete = (e) => {
@@ -224,7 +231,7 @@ function Home() {
           )}
         </SearchForm>
         <SearchResultController>
-          <Results hide={loading}>총 {pokemonList.length}마리 포켓몬</Results>
+          <Results hide={isLoading}>총 {pokemonList.length}마리 포켓몬</Results>
           <Controller>
             <Icon
               size="md"
@@ -257,15 +264,25 @@ function Home() {
         </FilterOptionList>
       </Header>
 
-      {loading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <>
           {pokemonList?.length > 0 ? (
             <PokemonList>
-              {pokemonList?.map((pokemon) => (
-                <PokemonItem key={pokemon.name} pokemon={pokemon} />
-              ))}
+              {pokemonList?.slice(0, page * OFFSET).map((pokemon, index) => {
+                if (page * OFFSET === index + 1) {
+                  return (
+                    <PokemonItem
+                      ref={lastElementRef}
+                      key={pokemon.name}
+                      pokemon={pokemon}
+                    />
+                  );
+                } else {
+                  return <PokemonItem key={pokemon.name} pokemon={pokemon} />;
+                }
+              })}
             </PokemonList>
           ) : (
             <NoList>
