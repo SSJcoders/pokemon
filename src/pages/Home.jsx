@@ -153,9 +153,10 @@ function Home() {
     setFilters((prev) => prev.filter((option) => option !== selectedFilter));
   };
 
-  // 정렬, 필터, 검색어 변경 시 화면 상단으로 이동
+  // 정렬, 필터, 검색어 변경 시 화면 상단 이동 및 무한스크롤 초기화
   useEffect(() => {
     window.scrollTo(0, 0);
+    setPage(1);
   }, [sort, filters, query]);
 
   // 검색폼 바깥 영역 클릭 시 드롭다운 닫기
