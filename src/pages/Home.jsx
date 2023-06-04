@@ -12,7 +12,7 @@ import {
   FilterOption as DefaultFilterOption,
 } from "../components/FilterModal";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Home() {
   // 검색 관련 state

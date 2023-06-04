@@ -1,10 +1,6 @@
-import { useLocation } from "react-router-dom";
-
-function Detail() {
-  const { state } = useLocation();
-  const { pokemon } = state;
-
-  return <div>{pokemon.names["kr"]}</div>;
+function Detail({ pokemon }) {
+  console.log(pokemon);
+  return <div>{pokemon.name}</div>;
 }
 
 export default Detail;

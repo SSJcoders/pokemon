@@ -1,28 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import Error from "./pages/Error";
 import Home from "./pages/Home";
-import Detail from "./pages/Detail";
+import ValidateDetail from "./pages/ValidateDetail";
 
 const router = createBrowserRouter(
   [
     {
       path: "/",
       element: <App />,
-      errorElement: <Error />,
       children: [
         {
-          errorElement: <Error />,
-          children: [
-            {
-              path: "",
-              element: <Home />,
-            },
-            {
-              path: ":id",
-              element: <Detail />,
-            },
-          ],
+          path: "",
+          element: <Home />,
+        },
+        {
+          path: ":id",
+          element: <ValidateDetail />,
         },
       ],
     },
