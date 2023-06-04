@@ -12,6 +12,7 @@ import {
   FilterOption as DefaultFilterOption,
 } from "../components/FilterModal";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
+import { Link, useNavigate } from "react-router-dom";
 
 function Home() {
   // 검색 관련 state
@@ -177,7 +178,7 @@ function Home() {
   }, []);
 
   return (
-    <Container>
+    <>
       <Header>
         <NavBar>
           <Icon size="lg" icon="fa-globe" />
@@ -272,17 +273,20 @@ function Home() {
           {pokemonList?.length > 0 ? (
             <PokemonList>
               {pokemonList?.slice(0, page * OFFSET).map((pokemon, index) => {
-                if (page * OFFSET === index + 1) {
-                  return (
-                    <PokemonItem
-                      ref={lastElementRef}
-                      key={pokemon.name}
-                      pokemon={pokemon}
-                    />
-                  );
-                } else {
-                  return <PokemonItem key={pokemon.name} pokemon={pokemon} />;
-                }
+                return (
+                  <Link
+                    to={`/${pokemon.id}`}
+                    state={{ pokemon: pokemon }}
+                    key={pokemon.name}
+                    style={{ textDecoration: "none" }}
+                  >
+                    {page * OFFSET === index + 1 ? (
+                      <PokemonItem ref={lastElementRef} pokemon={pokemon} />
+                    ) : (
+                      <PokemonItem pokemon={pokemon} />
+                    )}
+                  </Link>
+                );
               })}
             </PokemonList>
           ) : (
@@ -301,22 +305,11 @@ function Home() {
           modal === "sort" ? setSort : modal === "filter" ? setFilters : null
         }
       />
-    </Container>
+    </>
   );
 }
 
 export default Home;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 480px;
-  min-height: 100vh;
-  margin: 0 auto;
-  background-color: ${(props) => props.theme.colors.white};
-  position: relative;
-`;
 
 const Header = styled.header`
   position: sticky;

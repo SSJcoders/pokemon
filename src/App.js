@@ -1,7 +1,7 @@
-import { ThemeProvider, createGlobalStyle } from "styled-components";
+import { Outlet } from "react-router-dom";
+import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import theme from "./theme";
-import Home from "./pages/Home";
 import PretendardWoff2 from "./fonts/Pretendard-Regular.woff2";
 import PretendardWoff from "./fonts/Pretendard-Regular.woff";
 
@@ -36,9 +36,22 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Home />
+      <Layout>
+        <Outlet />
+      </Layout>
     </ThemeProvider>
   );
 }
 
 export default App;
+
+const Layout = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background-color: ${(props) => props.theme.colors.white};
+  position: relative;
+`;
