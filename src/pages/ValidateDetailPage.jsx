@@ -1,18 +1,18 @@
 import { useLocation, useParams } from "react-router-dom";
-import Error from "./Error";
-import Detail from "./Detail";
+import ErrorPage from "./ErrorPage";
+import DetailPage from "./DetailPage";
 
-function ValidateDetail() {
+function ValidateDetailPage() {
   let params = useParams();
   let pokemonId = params.id.match(/\b([1-9]|[1-9][0-9]|1[0-4][0-9]|15[0-1])\b/);
 
   const pokemon = useLocation()?.state?.pokemon;
 
   if (!pokemonId) {
-    return <Error />;
+    return <ErrorPage />;
   }
 
-  return <Detail pokemon={pokemon} />;
+  return <DetailPage pokemon={pokemon} />;
 }
 
-export default ValidateDetail;
+export default ValidateDetailPage;

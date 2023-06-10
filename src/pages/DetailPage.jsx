@@ -6,7 +6,7 @@ import InfoTab from "../components/InfoTab";
 import EvolutionTab from "../components/EvolutionTab";
 import TabLogo from "../assets/tabLogo.png";
 
-function Detail({ pokemon }) {
+function DetailPage({ pokemon }) {
   console.log(pokemon);
 
   const { id, names, types, sprites } = pokemon;
@@ -61,7 +61,7 @@ function Detail({ pokemon }) {
   );
 }
 
-export default Detail;
+export default DetailPage;
 
 const Wrapper = styled.div`
   display: flex;

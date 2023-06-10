@@ -14,7 +14,7 @@ import {
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import { Link } from "react-router-dom";
 
-function Home() {
+function HomePage() {
   // 검색 관련 state
   const [input, setInput] = useState("");
   const [query, setQuery] = useState("");
@@ -309,7 +309,7 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomePage;
 
 const Header = styled.header`
   position: sticky;

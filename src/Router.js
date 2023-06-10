@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
-import Home from "./pages/Home";
-import ValidateDetail from "./pages/ValidateDetail";
+import HomePage from "./pages/HomePage";
+import ValidateDetailPage from "./pages/ValidateDetailPage";
 
 const router = createBrowserRouter(
   [
@@ -11,11 +11,11 @@ const router = createBrowserRouter(
       children: [
         {
           path: "",
-          element: <Home />,
+          element: <HomePage />,
         },
         {
           path: ":id",
-          element: <ValidateDetail />,
+          element: <ValidateDetailPage />,
         },
       ],
     },

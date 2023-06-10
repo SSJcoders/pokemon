@@ -1,7 +1,7 @@
 import React from "react";
 
-function Error() {
+function ErrorPage() {
   return <div>Error</div>;
 }
 
-export default Error;
+export default ErrorPage;
