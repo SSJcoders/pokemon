@@ -2,12 +2,13 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Icon from "../components/Icon";
-import About from "../components/About";
-import Stats from "../components/Stats";
-import Evolution from "../components/Evolution";
+import InfoTab from "../components/InfoTab";
+import EvolutionTab from "../components/EvolutionTab";
 import TabLogo from "../assets/tabLogo.png";
 
 function Detail({ pokemon }) {
+  console.log(pokemon);
+
   const { id, names, types, sprites } = pokemon;
   const majorType = pokemon.types[0].type.name;
 
@@ -42,19 +43,19 @@ function Detail({ pokemon }) {
       </Pokemon>
       <Tabs>
         <Tab onClick={() => setTabNum(0)} active={tabNum === 0}>
-          개요
+          정보
         </Tab>
         <Tab onClick={() => setTabNum(1)} active={tabNum === 1}>
-          능력치
-        </Tab>
-        <Tab onClick={() => setTabNum(2)} active={tabNum === 2}>
           진화
         </Tab>
       </Tabs>
       <Main>
-        {tabNum === 0 ? <About /> : null}
-        {tabNum === 1 ? <Stats /> : null}
-        {tabNum === 2 ? <Evolution /> : null}
+        {tabNum === 0 ? (
+          <InfoTab pokemon={pokemon} majorType={majorType} />
+        ) : null}
+        {tabNum === 1 ? (
+          <EvolutionTab pokemon={pokemon} majorType={majorType} />
+        ) : null}
       </Main>
     </Wrapper>
   );
@@ -154,6 +155,7 @@ const Tab = styled.div`
   flex: 1;
   padding: 15px 0;
   text-align: center;
+  font-size: 20px;
   cursor: pointer;
   background: ${(props) =>
     props.active && `url(${TabLogo}) no-repeat center top`};

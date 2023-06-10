@@ -21,7 +21,7 @@ ${reset};
     font-style: normal;
 }
 
-*{
+*, *::after{
   box-sizing: border-box;
 }
 
