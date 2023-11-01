@@ -2,11 +2,11 @@
 
 **🚀 배포 링크**: [포켓몬 도감 바로가기](https://rigood.github.io/pokemon)
 
-|             무한스크롤             |
-| :--------------------------------: |
-| <img src="readme/무한스크롤.gif"/> |
+1세대 포켓몬(151종)을 조회, 검색, 정렬, 필터링할 수 있는 포켓몬도감 앱입니다.
 
-|            포켓몬 검색             |            포켓몬 상세정보             |
+<br>
+
+|   포켓몬 검색 + 검색어 자동완성    |            포켓몬 상세정보             |
 | :--------------------------------: | :------------------------------------: |
 | <img src="readme/포켓몬검색.gif"/> | <img src="readme/포켓몬상세정보.gif"/> |
 
@@ -14,19 +14,9 @@
 | :--------------------------------: | :----------------------------------: |
 | <img src="readme/포켓몬정렬.gif"/> | <img src="readme/포켓몬필터링.gif"/> |
 
-<br>
-
-## 주요 기능
-
-1세대 포켓몬(151종)을 조회, 검색, 정렬, 필터링할 수 있는 포켓몬도감 앱입니다.
-
-- Promise.all을 사용하여 151개의 API 호출 병렬 처리
-- recoil의 selector를 통해 Poke API로 받아온 데이터 캐싱
-- React Suspense를 통해 비동기 데이터를 가져오는 동안 로딩 UI 렌더링
-- Intersection Observer API를 활용하여 무한스크롤 구현
-- recoil의 atom, selector를 이용하여 검색, 정렬, 필터링 기능 구현
-- 검색어 자동완성 기능 구현
-- React Portal을 이용하여 정렬/필터링 모달창 구현
+|             무한스크롤             |
+| :--------------------------------: |
+| <img src="readme/무한스크롤.gif"/> |
 
 <br>
 
@@ -36,6 +26,18 @@
 - react-router-dom
 - recoil
 - styled-components
+
+<br>
+
+## 주요 기능
+
+- Promise.all을 사용하여 151개의 API 호출 병렬 처리
+- recoil의 selector를 통해 Poke API로 받아온 데이터 캐싱
+- React Suspense를 통해 비동기 데이터를 가져오는 동안 로딩 UI 렌더링
+- Intersection Observer API를 활용하여 무한스크롤 구현
+- recoil의 atom, selector를 이용하여 검색, 정렬, 필터링 기능 구현
+- 검색어 자동완성 기능 구현
+- React Portal을 이용하여 정렬/필터링 모달창 구현
 
 <br>
 
