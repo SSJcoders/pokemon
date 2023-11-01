@@ -1,12 +1,10 @@
 import { useRef, useCallback } from "react";
 
-function useInfiniteScroll(isLoading, hasMorePage, setPage) {
+function useInfiniteScroll(hasMorePage, setPage) {
   const observer = useRef();
 
   const lastElementRef = useCallback(
     (node) => {
-      if (isLoading) return;
-
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
@@ -17,7 +15,7 @@ function useInfiniteScroll(isLoading, hasMorePage, setPage) {
 
       if (node) observer.current.observe(node);
     },
-    [isLoading, hasMorePage, setPage]
+    [hasMorePage, setPage]
   );
 
   return lastElementRef;

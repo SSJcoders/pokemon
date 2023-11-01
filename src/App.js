@@ -1,57 +1,48 @@
-import { Outlet } from "react-router-dom";
-import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
-import reset from "styled-reset";
-import theme from "./theme";
-import PretendardWoff2 from "./fonts/Pretendard-Regular.woff2";
-import PretendardWoff from "./fonts/Pretendard-Regular.woff";
-
-const GlobalStyle = createGlobalStyle`
-${reset};
-
-@font-face {
-  font-family: "pretendard";
-  src: url(${PretendardWoff2}) format("woff2"),
-  url(${PretendardWoff}) format("woff");
-}
-
-@font-face {
-    font-family: 'HANAMDAUM';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-2@1.0/HANAMDAUM.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-}
-
-*, *::after{
-  box-sizing: border-box;
-}
-
-body{
-  font-family: "pretendard";
-  background-color: #E6E8F2;
-}
-
-`;
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Suspense } from "react";
+import styled from "styled-components";
+import GlobalModal from "./components/Modal/GlobalModal";
+import MainPage from "./pages/MainPage/MainPage";
+import ValidateDetail from "./pages/DetailPage/ValidateDetail";
+import Loader from "./components/common/Loader/Loader";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Layout>
-        <Outlet />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<Loader />}>
+                <MainPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/:pokemonId"
+            element={
+              <Suspense fallback={<Loader />}>
+                <ValidateDetail />
+              </Suspense>
+            }
+          />
+        </Routes>
+        <GlobalModal />
       </Layout>
-    </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
 export default App;
 
 const Layout = styled.div`
-  display: flex;
-  flex-direction: column;
   width: 100%;
   max-width: 480px;
   min-height: 100vh;
   margin: 0 auto;
-  background-color: ${(props) => props.theme.colors.white};
+  display: flex;
+  flex-direction: column;
+  background-color: var(--inner-bg-color);
   position: relative;
 `;

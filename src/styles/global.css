@@ -1,0 +1,24 @@
+:root {
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-md: 16px;
+  --fs-lg: 18px;
+  --fs-xl: 20px;
+  --fs-2xl: 24px;
+  --fs-3xl: 28px;
+  --outer-bg-color: #e6e8f2;
+  --inner-bg-color: #ffffff;
+  --pokemon-id-color: #17171b60;
+  --pokemon-name-color: #ffffff;
+  --pokemon-type-color: #ffffff;
+  --pokemon-value-color: #808080;
+  --pokemon-stat-bar-color: #ececec;
+  --pokemon-matched-name-color: #ea5d60;
+  --input-bg-color: #f2f2f2;
+  --autocomplete-border-color: #000000;
+  --autocomplete-selected-color: #e6e8f2;
+  --option-color: #808080;
+  --option-bg-color: #f2f2f2;
+  --selected-option-color: #ffffff;
+  --selected-option-bg-color: #ea5d60;
+}

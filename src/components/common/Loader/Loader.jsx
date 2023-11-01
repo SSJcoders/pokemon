@@ -1,11 +1,11 @@
 import styled from "styled-components";
-import LoaderImg from "../assets/loader.gif";
+import LoaderImg from "../../../assets/images/loader.gif";
 
 function Loader() {
   return (
     <Wrapper>
-      <img src={LoaderImg} alt="로딩중" />
-      <p>로딩중</p>
+      <Image src={LoaderImg} alt="로딩중" />
+      <Text>로딩중</Text>
     </Wrapper>
   );
 }
@@ -20,13 +20,13 @@ const Wrapper = styled.div`
   justify-content: center;
   row-gap: 40px;
   overflow: hidden;
+`;
 
-  img {
-    transform: scale(2);
-  }
+const Image = styled.img`
+  transform: scale(2);
+`;
 
-  p {
-    font-family: "HANAMDAUM";
-    font-size: 20px;
-  }
+const Text = styled.div`
+  font-family: "HANAMDAUM";
+  font-size: var(--fs-xl);
 `;
