@@ -1,14 +1,21 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import LoaderImg from "../../../assets/images/loader.gif";
+import { getPokemonSvgImg, random } from "../../../utils";
+import { useMemo } from "react";
+import { dance } from "../Pokemon/PokemonImage";
 
 function Loader() {
+  const randomId = useMemo(() => random(1, 151), []);
+
   const { t } = useTranslation();
 
   return (
     <Wrapper>
-      <Image src={LoaderImg} alt={t("loading")} />
-      <Text>{t("loading")}</Text>
+      <Columns>
+        <Text>{t("quiz")}</Text>
+        <Text>{t("guess")}</Text>
+      </Columns>
+      <Image src={getPokemonSvgImg(randomId)} alt={t("randomPokemon")} />
     </Wrapper>
   );
 }
@@ -25,11 +32,24 @@ const Wrapper = styled.div`
   overflow: hidden;
 `;
 
-const Image = styled.img`
-  transform: scale(2);
+const Columns = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  span:first-child {
+    color: var(--quiz-color);
+  }
 `;
 
-const Text = styled.div`
+const Text = styled.span`
   font-family: "HANAMDAUM";
-  font-size: var(--fs-xl);
+  font-size: var(--fs-lg);
+`;
+
+const Image = styled.img`
+  width: 100px;
+  height: 100px;
+  animation: ${dance} 1s linear infinite 100ms;
 `;

@@ -6,7 +6,7 @@ const PokemonImage = ({ imgPath, isAbsolute }) => {
 
 export default PokemonImage;
 
-const dance = keyframes`
+export const dance = keyframes`
   0%, 100% {
     transform: rotate(0)
   }

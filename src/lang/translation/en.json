@@ -1,6 +1,9 @@
 {
   "appTitle": "Pokedex",
   "loading": "Loading",
+  "randomPokemon": "Random Pokemon Image",
+  "quiz": "Quiz time!",
+  "guess": "Can you guess my name?",
   "notFound": "Page Not Found",
   "goToMainPage": "Go To Main Page",
   "searchPlaceholder": "Enter Pokemon name or id",
