@@ -50,10 +50,10 @@ function FilterModal() {
         ))}
       </FilterOptions>
       <Buttons>
-        <ResetButton onClick={resetFilters}>
+        <ResetButton type="button" onClick={resetFilters}>
           {t("filterLabels.reset")}
         </ResetButton>
-        <ApplyButton onClick={applyFilters}>
+        <ApplyButton type="button" onClick={applyFilters}>
           {t("filterLabels.apply")}
         </ApplyButton>
       </Buttons>

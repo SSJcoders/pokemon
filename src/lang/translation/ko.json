@@ -1,6 +1,8 @@
 {
   "appTitle": "포켓몬도감",
   "loading": "로딩중",
+  "notFound": "존재하지 않는 페이지입니다.",
+  "goToMainPage": "메인화면으로 이동",
   "searchPlaceholder": "포켓몬 이름 또는 번호를 입력하세요.",
   "searchCount": "총 {{count}}마리 포켓몬",
   "noPokemon": "포켓몬이 존재하지 않습니다.",

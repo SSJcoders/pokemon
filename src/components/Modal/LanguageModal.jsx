@@ -57,6 +57,6 @@ const Wrapper = styled.div`
   row-gap: 30px;
 `;
 
-const LangButton = styled.button`
+const LangButton = styled.button.attrs({ type: "button" })`
   ${ElevatedButton}
 `;

@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import NotFound from "../../components/common/NotFound/NotFound";
 import DetailPage from "./DetailPage";
 
@@ -9,8 +10,10 @@ function ValidateDetail() {
     /\b([1-9]|[1-9][0-9]|1[0-4][0-9]|15[0-1])\b/
   );
 
+  const { t } = useTranslation();
+
   if (!isPokemonIdValid) {
-    return <NotFound text="존재하지 않는 페이지입니다." />;
+    return <NotFound text={t("notFound")} />;
   }
 
   return <DetailPage pokemonId={pokemonId} />;

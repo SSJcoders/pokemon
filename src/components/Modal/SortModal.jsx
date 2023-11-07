@@ -26,6 +26,7 @@ function SortModal() {
         {Object.values(SORT_OPTIONS).map((option) => {
           return (
             <SortOption
+              type="button"
               key={option}
               selected={sort === option}
               onClick={() => handleSortOption(option)}

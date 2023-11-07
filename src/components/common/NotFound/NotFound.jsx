@@ -1,11 +1,21 @@
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import OpenPokeballImg from "../../../assets/images/open_pokeball.png";
+import ElevatedButton from "../Button/ElevatedButton";
 
 const NotFound = ({ text }) => {
+  const navigate = useNavigate();
+  const goToMainPage = () => navigate("/");
+
+  const { t } = useTranslation();
   return (
     <Wrapper>
       <Image src={OpenPokeballImg} />
       <Text>{text}</Text>
+      <Button type="button" onClick={goToMainPage}>
+        {t("goToMainPage")}
+      </Button>
     </Wrapper>
   );
 };
@@ -29,3 +39,10 @@ const Image = styled.img`
 `;
 
 const Text = styled.div``;
+
+const Button = styled.button`
+  ${ElevatedButton}
+  width: fit-content;
+  background-color: var(--selected-option-bg-color);
+  color: var(--selected-option-color);
+`;
