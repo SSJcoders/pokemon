@@ -5,6 +5,7 @@ import { modalState } from "../../recoil";
 import { MODAL_TYPES } from "../../constants";
 import SortModal from "./SortModal";
 import FilterModal from "./FilterModal";
+import LanguageModal from "./LanguageModal";
 
 const GlobalModal = () => {
   const [modal, setModal] = useRecoilState(modalState);
@@ -19,6 +20,7 @@ const GlobalModal = () => {
       <ModalDialog>
         {modal === MODAL_TYPES.SORT && <SortModal />}
         {modal === MODAL_TYPES.FILTER && <FilterModal />}
+        {modal === MODAL_TYPES.LANGUAGE && <LanguageModal />}
       </ModalDialog>
     </>,
     document.getElementById("portal")

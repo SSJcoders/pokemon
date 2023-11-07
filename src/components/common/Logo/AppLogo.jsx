@@ -1,11 +1,14 @@
 import styled from "styled-components";
 import AppLogoImg from "../../../assets/images/app_logo.png";
+import { useTranslation } from "react-i18next";
 
 const AppLogo = () => {
+  const { t } = useTranslation();
+
   return (
     <Wrapper onClick={() => window.location.reload()}>
       <Image src={AppLogoImg} alt="포켓몬도감 로고" />
-      <Text>포켓몬도감</Text>
+      <Text>{t("appTitle")}</Text>
     </Wrapper>
   );
 };

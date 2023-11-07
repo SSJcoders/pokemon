@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import useModal from "../../hooks/useModal";
 import { typeFiltersState } from "../../recoil";
 import { POKEMON_TYPES } from "../../constants";
 import ModalHeader from "./ModalHeader";
 import FilterOption from "../common/Filter/FilterOption";
+import ElevatedButton from "../common/Button/ElevatedButton";
 
 function FilterModal() {
   const { closeModal } = useModal();
@@ -32,9 +34,11 @@ function FilterModal() {
     closeModal();
   };
 
+  const { t } = useTranslation();
+
   return (
     <Wrapper>
-      <ModalHeader title="필터" />
+      <ModalHeader title={t("filter")} />
       <FilterOptions>
         {POKEMON_TYPES.map((type) => (
           <FilterOption
@@ -46,8 +50,12 @@ function FilterModal() {
         ))}
       </FilterOptions>
       <Buttons>
-        <ResetButton onClick={resetFilters}>초기화</ResetButton>
-        <ApplyButton onClick={applyFilters}>적용</ApplyButton>
+        <ResetButton onClick={resetFilters}>
+          {t("filterLabels.reset")}
+        </ResetButton>
+        <ApplyButton onClick={applyFilters}>
+          {t("filterLabels.apply")}
+        </ApplyButton>
       </Buttons>
     </Wrapper>
   );
@@ -73,18 +81,12 @@ const Buttons = styled.div`
   column-gap: 20px;
 `;
 
-const Button = styled.button`
-  width: 100%;
-  padding: 16px;
-  border-radius: 10px;
-  background-color: var(--option-bg-color);
-  font-size: var(--fs-md);
-  color: var(--option-color);
+const ResetButton = styled.button`
+  ${ElevatedButton}
 `;
 
-const ResetButton = styled(Button)``;
-
-const ApplyButton = styled(Button)`
+const ApplyButton = styled.button`
+  ${ElevatedButton}
   background-color: var(--selected-option-bg-color);
   color: var(--selected-option-color);
   box-shadow: 0px 10px 20px rgba(234, 93, 96, 0.3);

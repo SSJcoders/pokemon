@@ -1,0 +1,49 @@
+{
+  "appTitle": "포켓몬도감",
+  "loading": "로딩중",
+  "searchPlaceholder": "포켓몬 이름 또는 번호를 입력하세요.",
+  "searchCount": "총 {{count}}마리 포켓몬",
+  "noPokemon": "포켓몬이 존재하지 않습니다.",
+  "wishlist": "찜한 포켓몬",
+  "sort": "정렬",
+  "sortOptions": {
+    "idASC": "번호 오름차순",
+    "idDESC": "번호 내림차순",
+    "nameASC": "이름 오름차순",
+    "nameDESC": "이름 내림차순"
+  },
+  "filter": "필터",
+  "filterLabels": {
+    "reset": "초기화",
+    "apply": "적용"
+  },
+  "language": "언어 설정",
+  "languageOptions": {
+    "ko": "한국어",
+    "en": "영어"
+  },
+  "info": "정보",
+  "basicInfo": "기본 정보",
+  "baseStats": "기본 스탯",
+  "evol": "진화",
+  "pokemonTypes": {
+    "bug": "벌레",
+    "dark": "악",
+    "dragon": "드래곤",
+    "electric": "전기",
+    "fairy": "페어리",
+    "fighting": "격투",
+    "fire": "불꽃",
+    "flying": "비행",
+    "ghost": "고스트",
+    "grass": "풀",
+    "ground": "땅",
+    "ice": "얼음",
+    "normal": "노말",
+    "poison": "독",
+    "psychic": "에스퍼",
+    "rock": "바위",
+    "steel": "강철",
+    "water": "물"
+  }
+}

@@ -8,6 +8,7 @@ import {
   faHeart,
   faSliders,
 } from "@fortawesome/free-solid-svg-icons";
+import { useTranslation } from "react-i18next";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import useModal from "../../hooks/useModal";
 import { MODAL_TYPES } from "../../constants";
@@ -31,28 +32,39 @@ const MainPage = () => {
 
   // 모달 열기
   const { openModal } = useModal();
+
+  // 언어 설정
+  const { t } = useTranslation();
+
   return (
     <>
       <Header>
         <NavBar>
-          <IconButton fontSize="20px" icon={faGlobe} title="언어 설정" />
-          <IconButton fontSize="20px" icon={faHeart} title="찜한 포켓몬" />
+          <IconButton
+            fontSize="20px"
+            icon={faGlobe}
+            title={t("language")}
+            onClick={() => openModal(MODAL_TYPES.LANGUAGE)}
+          />
+          <IconButton fontSize="20px" icon={faHeart} title={t("wishlist")} />
         </NavBar>
         <AppLogo />
         <SearchBar />
         <Row>
-          <SearchCount>총 {pokemonList.length}마리 포켓몬</SearchCount>
+          <SearchCount>
+            {t("searchCount", { count: pokemonList.length })}
+          </SearchCount>
           <SearchSortFilter>
             <IconButton
               fontSize="18px"
               icon={faArrowDownShortWide}
-              title="정렬"
+              title={t("sort")}
               onClick={() => openModal(MODAL_TYPES.SORT)}
             />
             <IconButton
               fontSize="18px"
               icon={faSliders}
-              title="필터"
+              title={t("filter")}
               onClick={() => openModal(MODAL_TYPES.FILTER)}
             />
           </SearchSortFilter>
@@ -76,7 +88,7 @@ const MainPage = () => {
           })}
         </PokemonList>
       ) : (
-        <NotFound text="포켓몬이 존재하지 않습니다." />
+        <NotFound text={t("noPokemon")} />
       )}
     </>
   );

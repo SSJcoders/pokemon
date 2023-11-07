@@ -1,0 +1,49 @@
+{
+  "appTitle": "Pokedex",
+  "loading": "Loading",
+  "searchPlaceholder": "Enter Pokemon name or id",
+  "searchCount": "Total {{count}} pokemons",
+  "noPokemon": "No pokemons",
+  "wishlist": "Wishlist pokemon",
+  "sort": "Sort",
+  "sortOptions": {
+    "idASC": "ID Ascending Order",
+    "idDESC": "ID Descending Order",
+    "nameASC": "Name Ascending Order",
+    "nameDESC": "Name Descending Order"
+  },
+  "filter": "Filter",
+  "filterLabels": {
+    "reset": "Reset",
+    "apply": "Apply"
+  },
+  "language": "Language",
+  "languageOptions": {
+    "ko": "Korean",
+    "en": "English"
+  },
+  "info": "Info.",
+  "basicInfo": "Basic Information",
+  "baseStats": "Base Statistics",
+  "evol": "Evol.",
+  "pokemonTypes": {
+    "bug": "bug",
+    "dark": "dark",
+    "dragon": "dragon",
+    "electric": "electric",
+    "fairy": "fairy",
+    "fighting": "fighting",
+    "fire": "fire",
+    "flying": "flying",
+    "ghost": "ghost",
+    "grass": "grass",
+    "ground": "ground",
+    "ice": "ice",
+    "normal": "normal",
+    "poison": "poison",
+    "psychic": "psychic",
+    "rock": "rock",
+    "steel": "steel",
+    "water": "water"
+  }
+}

@@ -1,9 +1,14 @@
 import { selector, selectorFamily, atom } from "recoil";
-import { NUM_OF_POKEMONS, SORT_OPTIONS } from "./constants";
+import { LOCALSTORAGE_KEY, NUM_OF_POKEMONS, SORT_OPTIONS } from "./constants";
 
 export const modalState = atom({
   key: "modal",
   default: null,
+});
+
+export const languageState = atom({
+  key: "language",
+  default: JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY))?.language || "ko",
 });
 
 export const queryState = atom({
@@ -76,12 +81,13 @@ export const processedPokemonListState = selector({
     const query = get(queryState);
     const typeFilters = get(typeFiltersState);
     const sort = get(sortState);
+    const language = get(languageState);
 
     return (
       pokemonList
         // 검색 (포켓몬 이름, id)
         .filter(({ names, id }) => {
-          return names["ko"].includes(query) || id === +query;
+          return names[language].includes(query) || id === +query;
         })
         // 필터링 (포켓몬 타입)
         .filter(({ types }) => {
@@ -102,15 +108,15 @@ export const processedPokemonListState = selector({
             case SORT_OPTIONS.ID_DESC:
               return b.id - a.id;
             case SORT_OPTIONS.NAME_ASC:
-              return b.names["ko"] > a.names["ko"]
+              return b.names[language] > a.names[language]
                 ? -1
-                : b.names["ko"] < a.names["ko"]
+                : b.names[language] < a.names[language]
                 ? 1
                 : 0;
             case SORT_OPTIONS.NAME_DESC:
-              return a.names["ko"] > b.names["ko"]
+              return a.names[language] > b.names[language]
                 ? -1
-                : a.names["ko"] < b.names["ko"]
+                : a.names[language] < b.names[language]
                 ? 1
                 : 0;
             default:

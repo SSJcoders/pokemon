@@ -1,11 +1,14 @@
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import LoaderImg from "../../../assets/images/loader.gif";
 
 function Loader() {
+  const { t } = useTranslation();
+
   return (
     <Wrapper>
-      <Image src={LoaderImg} alt="로딩중" />
-      <Text>로딩중</Text>
+      <Image src={LoaderImg} alt={t("loading")} />
+      <Text>{t("loading")}</Text>
     </Wrapper>
   );
 }

@@ -1,12 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { useTranslation } from "react-i18next";
+import { languageState } from "./recoil";
 import GlobalModal from "./components/Modal/GlobalModal";
 import MainPage from "./pages/MainPage/MainPage";
 import ValidateDetail from "./pages/DetailPage/ValidateDetail";
 import Loader from "./components/common/Loader/Loader";
 
 function App() {
+  const language = useRecoilValue(languageState);
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language, i18n]);
+
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Layout>

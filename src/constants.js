@@ -1,3 +1,5 @@
+export const LOCALSTORAGE_KEY = "pokemon";
+
 export const NUM_OF_POKEMONS = 151;
 
 export const MAX_VALUE_OF_STAT = 255;
@@ -26,11 +28,12 @@ export const POKEMON_TYPES = [
 export const MODAL_TYPES = {
   SORT: "SORT",
   FILTER: "FILTER",
+  LANGUAGE: "LANGUAGE",
 };
 
 export const SORT_OPTIONS = {
-  ID_ASC: "번호 오름차순",
-  ID_DESC: "번호 내림차순",
-  NAME_ASC: "이름 오름차순",
-  NAME_DESC: "이름 내림차순",
+  ID_ASC: "idASC",
+  ID_DESC: "idDESC",
+  NAME_ASC: "nameASC",
+  NAME_DESC: "nameDESC",
 };

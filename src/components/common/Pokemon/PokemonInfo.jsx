@@ -1,10 +1,16 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { languageState } from "../../../recoil";
+import { useTranslation } from "react-i18next";
 
 const PokemonInfo = ({ id, names, types }) => {
+  const language = useRecoilValue(languageState);
+  const { t } = useTranslation();
+
   return (
     <Wrapper>
       <PokemonId>{"#" + String(id).padStart(4, "0")}</PokemonId>
-      <PokemonName>{names["ko"]}</PokemonName>
+      <PokemonName>{names[language]}</PokemonName>
       <PokemonTypes>
         {types.map(({ type }) => (
           <PokemonType key={type.name} type={type.name}>
@@ -12,7 +18,7 @@ const PokemonInfo = ({ id, names, types }) => {
               src={process.env.PUBLIC_URL + `/assets/badges/${type.name}.png`}
               alt={type.name}
             />
-            <PokemonTypeName>{type.name}</PokemonTypeName>
+            <PokemonTypeName>{t(`pokemonTypes.${type.name}`)}</PokemonTypeName>
           </PokemonType>
         ))}
       </PokemonTypes>
@@ -58,7 +64,7 @@ const PokemonType = styled.li`
   display: flex;
   align-items: center;
   column-gap: 5px;
-  padding: 5px;
+  padding: 4px 8px;
   border-radius: 5px;
   background-color: ${({ theme, type }) => theme.typeColors[type]};
 `;

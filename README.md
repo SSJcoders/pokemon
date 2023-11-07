@@ -26,6 +26,7 @@
 - react-router-dom
 - recoil
 - styled-components
+- i18next
 
 <br>
 
@@ -37,7 +38,8 @@
 - Intersection Observer API를 활용하여 무한스크롤 구현
 - recoil의 atom, selector를 이용하여 검색, 정렬, 필터링 기능 구현
 - 검색어 자동완성 기능 구현
-- React Portal을 이용하여 정렬/필터링 모달창 구현
+- React Portal을 이용하여 모달창 구현
+- i18next 라이브러리를 사용하여 다국어(ko, en) 모드 구현
 
 <br>
 
@@ -52,7 +54,6 @@
 ### 업데이트 예정
 
 - Promise.all에 대한 에러 처리
-- 다국어 지원 (한글/영문)
 - 포켓몬 Evolution 탭 만들기
 - 찜한 포켓몬 페이지 만들기
 

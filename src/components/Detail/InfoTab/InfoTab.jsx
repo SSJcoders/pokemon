@@ -1,8 +1,14 @@
+import { useRecoilValue } from "recoil";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { languageState } from "../../../recoil";
 import BaseInfo from "./BaseInfo";
 import BaseStat from "./BaseStat";
 
 function InfoTab({ pokemon, majorType }) {
+  const language = useRecoilValue(languageState);
+  const { t } = useTranslation();
+
   const infoList = [
     {
       name: {
@@ -82,24 +88,24 @@ function InfoTab({ pokemon, majorType }) {
   return (
     <Wrapper>
       <Article>
-        <Title majorType={majorType}>기본 정보</Title>
+        <Title majorType={majorType}>{t("basicInfo")}</Title>
         <Contents>
           {infoList.map((info) => (
             <BaseInfo
-              key={info.name["ko"]}
-              infoName={info.name["ko"]}
+              key={info.name[language]}
+              infoName={info.name[language]}
               infoValue={info.value}
             />
           ))}
         </Contents>
       </Article>
       <Article>
-        <Title majorType={majorType}>기본 능력치</Title>
+        <Title majorType={majorType}>{t("baseStats")}</Title>
         <Contents>
           {statList.map((stat) => (
             <BaseStat
-              key={stat.name["ko"]}
-              statName={stat.name["ko"]}
+              key={stat.name[language]}
+              statName={stat.name[language]}
               statValue={stat.value}
               majorType={majorType}
             />

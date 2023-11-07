@@ -1,9 +1,11 @@
 import { useRecoilState } from "recoil";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
+import { useTranslation } from "react-i18next";
 import useModal from "../../hooks/useModal";
 import { sortState } from "../../recoil";
 import { SORT_OPTIONS } from "../../constants";
 import ModalHeader from "./ModalHeader";
+import ElevatedButton from "../common/Button/ElevatedButton";
 
 function SortModal() {
   const { closeModal } = useModal();
@@ -15,9 +17,11 @@ function SortModal() {
     closeModal();
   };
 
+  const { t } = useTranslation();
+
   return (
     <Wrapper>
-      <ModalHeader title="정렬" />
+      <ModalHeader title={t("sort")} />
       <SortOptions>
         {Object.values(SORT_OPTIONS).map((option) => {
           return (
@@ -26,7 +30,7 @@ function SortModal() {
               selected={sort === option}
               onClick={() => handleSortOption(option)}
             >
-              {option}
+              {t(`sortOptions.${option}`)}
             </SortOption>
           );
         })}
@@ -50,18 +54,5 @@ const SortOptions = styled.div`
 `;
 
 const SortOption = styled.button`
-  width: 100%;
-  padding: 16px;
-  border-radius: 10px;
-  background-color: var(--option-bg-color);
-  font-size: var(--fs-md);
-  color: var(--option-color);
-
-  ${({ selected }) =>
-    selected &&
-    css`
-      background-color: var(--selected-option-bg-color);
-      color: var(--selected-option-color);
-      box-shadow: 0px 10px 20px rgba(234, 93, 96, 0.3);
-    `}
+  ${ElevatedButton}
 `;

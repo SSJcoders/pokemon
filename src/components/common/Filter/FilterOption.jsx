@@ -1,8 +1,11 @@
 import styled, { css } from "styled-components";
+import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 const FilterOption = ({ type, selected, onClick, hasRemoveIcon }) => {
+  const { t } = useTranslation();
+
   return (
     <Wrapper type={type} selected={selected} onClick={onClick}>
       <TypeLogo
@@ -10,7 +13,7 @@ const FilterOption = ({ type, selected, onClick, hasRemoveIcon }) => {
         alt={type}
         selected={selected}
       />
-      <TypeText>{type}</TypeText>
+      <TypeText>{t(`pokemonTypes.${type}`)}</TypeText>
       {hasRemoveIcon && <FontAwesomeIcon icon={faXmark} fontSize="12px" />}
     </Wrapper>
   );

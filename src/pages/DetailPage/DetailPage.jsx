@@ -10,10 +10,11 @@ import EvolutionTab from "../../components/Detail/EvolutionTab/EvolutionTab";
 import PokemonInfo from "../../components/common/Pokemon/PokemonInfo";
 import PokemonImage from "../../components/common/Pokemon/PokemonImage";
 import TabLogoImg from "../../assets/images/tab_logo.png";
+import { useTranslation } from "react-i18next";
 
 const TabNames = {
-  INFO: "정보",
-  EVOLUTION: "진화",
+  INFO: "info",
+  EVOL: "evol",
 };
 
 const DetailPage = ({ pokemonId }) => {
@@ -25,6 +26,8 @@ const DetailPage = ({ pokemonId }) => {
 
   const navigate = useNavigate();
   const goBack = () => navigate(-1);
+
+  const { t } = useTranslation();
 
   return (
     <Wrapper majorType={majorType}>
@@ -42,13 +45,13 @@ const DetailPage = ({ pokemonId }) => {
           onClick={() => setActiveTab(TabNames.INFO)}
           active={activeTab === TabNames.INFO}
         >
-          {TabNames.INFO}
+          {t(TabNames.INFO)}
         </Tab>
         <Tab
           onClick={() => setActiveTab(TabNames.EVOLUTION)}
           active={activeTab === TabNames.EVOLUTION}
         >
-          {TabNames.EVOLUTION}
+          {t(TabNames.EVOL)}
         </Tab>
       </Tabs>
       <Main>

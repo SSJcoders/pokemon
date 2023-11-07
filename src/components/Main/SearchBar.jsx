@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useTranslation } from "react-i18next";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { pokemonListState, queryState } from "../../recoil";
+import { languageState, pokemonListState, queryState } from "../../recoil";
 import SearchAutoCompleteItem from "./SearchAutoCompleteItem";
 import IconButton from "../common/Button/IconButton";
 
 const SearchBar = () => {
+  const language = useRecoilValue(languageState);
+
   const pokemonList = useRecoilValue(pokemonListState);
 
   const [input, setInput] = useState("");
@@ -29,7 +32,7 @@ const SearchBar = () => {
   // 검색 자동완성 처리
   const handleAutoComplete = (searchInput) => {
     const newAutoCompleteList = pokemonList.filter(({ names }) =>
-      names["ko"].startsWith(searchInput)
+      names[language].startsWith(searchInput)
     );
 
     if (searchInput.length > 0 && newAutoCompleteList.length > 0) {
@@ -77,7 +80,7 @@ const SearchBar = () => {
           : selectedAutoCompleteItemIdx + 1;
 
       setSelectedAutoCompleteItemIdx(newIdx);
-      setInput(autocompleteList[newIdx].names["ko"]);
+      setInput(autocompleteList[newIdx].names[language]);
     }
 
     if (e.key === "ArrowUp") {
@@ -94,13 +97,13 @@ const SearchBar = () => {
           : selectedAutoCompleteItemIdx - 1;
 
       setSelectedAutoCompleteItemIdx(newIdx);
-      setInput(autocompleteList[newIdx].names["ko"]);
+      setInput(autocompleteList[newIdx].names[language]);
     }
   };
 
   // 자동완성 단어 클릭 시 검색 실행
   const searchByAutoCompleteItemClick = (pokemon) => {
-    const name = pokemon.names["ko"];
+    const name = pokemon.names[language];
     setInput(name);
     setQuery(name);
     setIsAutoCompleteVisible(false);
@@ -125,13 +128,16 @@ const SearchBar = () => {
       document.removeEventListener("mousedown", handleOutsideSearchBarClick);
   }, []);
 
+  // 언어 설정
+  const { t } = useTranslation();
+
   return (
     <Wrapper ref={ref}>
       <SearchForm onSubmit={handleSubmit}>
         <IconButton fontSize="18px" icon={faMagnifyingGlass} tabIndex={-1} />
         <SearchInput
           type="text"
-          placeholder="포켓몬 이름 또는 번호를 입력하세요."
+          placeholder={t("searchPlaceholder")}
           value={input}
           onChange={handleInputChange}
           onKeyDown={selectAutoCompleteItemByKeyboard}
@@ -151,7 +157,7 @@ const SearchBar = () => {
               key={pokemon.id}
               selected={idx === selectedAutoCompleteItemIdx}
               imgPath={pokemon.sprites.front_default}
-              name={pokemon.names["ko"]}
+              name={pokemon.names[language]}
               matchedName={matchedName}
               onClick={() => searchByAutoCompleteItemClick(pokemon)}
               onMouseEnter={() => selectAutoCompleteItemByMouse(idx)}
