@@ -6,7 +6,10 @@
   "searchPlaceholder": "포켓몬 이름 또는 번호를 입력하세요.",
   "searchCount": "총 {{count}}마리 포켓몬",
   "noPokemon": "포켓몬이 존재하지 않습니다.",
-  "wishlist": "찜한 포켓몬",
+  "myPokemons": "My 포켓몬",
+  "myPokemonsCount": "포켓몬 {{v1}}{{count}}{{v2}}마리를 잡았어요!",
+  "myPokemonsAll": "모두 보기",
+  "myPokemonsFiltered": "My 포켓몬만 보기",
   "sort": "정렬",
   "sortOptions": {
     "idASC": "번호 오름차순",

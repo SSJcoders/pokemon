@@ -15,8 +15,8 @@ function PokemonItem({ pokemon }, ref) {
       <SLink to={`/${id}`} state={{ pokemon: pokemon }}>
         <PokemonInfo id={id} names={names} types={types} />
         <PokemonImage
-          isAbsolute={true}
           imgPath={sprites.other["official-artwork"].front_default}
+          isAbsolute={true}
         />
       </SLink>
     </Wrapper>

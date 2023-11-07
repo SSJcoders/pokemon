@@ -8,12 +8,15 @@
   --fs-3xl: 28px;
   --outer-bg-color: #e6e8f2;
   --inner-bg-color: #ffffff;
+  --heart-color: #f1565c;
+  --pokemon-count-color: #ea5d60;
   --pokemon-id-color: #17171b60;
   --pokemon-name-color: #ffffff;
   --pokemon-type-color: #ffffff;
   --pokemon-value-color: #808080;
   --pokemon-stat-bar-color: #ececec;
   --pokemon-matched-name-color: #ea5d60;
+  --pokemon-sticker-border-color: #eeeeee;
   --input-bg-color: #f2f2f2;
   --autocomplete-border-color: #000000;
   --autocomplete-selected-color: #e6e8f2;

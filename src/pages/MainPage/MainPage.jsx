@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { processedPokemonListState } from "../../recoil";
 import {
@@ -32,6 +33,13 @@ const MainPage = () => {
 
   // 모달 열기
   const { openModal } = useModal();
+  const openLanguageModal = () => openModal(MODAL_TYPES.LANGUAGE);
+  const openSortModal = () => openModal(MODAL_TYPES.SORT);
+  const openFilterModal = () => openModal(MODAL_TYPES.FILTER);
+
+  // 페이지 이동
+  const navigate = useNavigate();
+  const goToMyPokemonsPage = () => navigate("/mypokemons");
 
   // 언어 설정
   const { t } = useTranslation();
@@ -44,9 +52,14 @@ const MainPage = () => {
             fontSize="20px"
             icon={faGlobe}
             title={t("language")}
-            onClick={() => openModal(MODAL_TYPES.LANGUAGE)}
+            onClick={openLanguageModal}
           />
-          <IconButton fontSize="20px" icon={faHeart} title={t("wishlist")} />
+          <IconButton
+            fontSize="20px"
+            icon={faHeart}
+            title={t("myPokemons")}
+            onClick={goToMyPokemonsPage}
+          />
         </NavBar>
         <AppLogo />
         <SearchBar />
@@ -59,13 +72,13 @@ const MainPage = () => {
               fontSize="18px"
               icon={faArrowDownShortWide}
               title={t("sort")}
-              onClick={() => openModal(MODAL_TYPES.SORT)}
+              onClick={openSortModal}
             />
             <IconButton
               fontSize="18px"
               icon={faSliders}
               title={t("filter")}
-              onClick={() => openModal(MODAL_TYPES.FILTER)}
+              onClick={openFilterModal}
             />
           </SearchSortFilter>
         </Row>

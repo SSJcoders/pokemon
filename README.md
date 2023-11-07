@@ -40,6 +40,7 @@
 - 검색어 자동완성 기능 구현
 - React Portal을 이용하여 모달창 구현
 - i18next 라이브러리를 사용하여 다국어(ko, en) 모드 구현
+- My 포켓몬을 모아볼 수 있으며, localStorage에 데이터 저장
 
 <br>
 
@@ -55,7 +56,6 @@
 
 - Promise.all에 대한 에러 처리
 - 포켓몬 Evolution 탭 만들기
-- 찜한 포켓몬 페이지 만들기
 
 ### ver 2.1
 

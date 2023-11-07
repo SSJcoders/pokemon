@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import useModal from "../../hooks/useModal";
 import { languageState } from "../../recoil";
-import { LOCALSTORAGE_KEY } from "../../constants";
+import { LOCALSTORAGE_KEY_LANG } from "../../constants";
 import ModalHeader from "./ModalHeader";
 import ElevatedButton from "../common/Button/ElevatedButton";
 
@@ -17,10 +17,7 @@ const LanguageModal = () => {
   const changeLanguage = (e) => {
     const selectedLanguage = e.target.value;
 
-    localStorage.setItem(
-      LOCALSTORAGE_KEY,
-      JSON.stringify({ language: selectedLanguage })
-    );
+    localStorage.setItem(LOCALSTORAGE_KEY_LANG, selectedLanguage);
 
     setLanguage(selectedLanguage);
     closeModal();

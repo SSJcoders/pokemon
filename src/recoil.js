@@ -1,5 +1,10 @@
 import { selector, selectorFamily, atom } from "recoil";
-import { LOCALSTORAGE_KEY, NUM_OF_POKEMONS, SORT_OPTIONS } from "./constants";
+import {
+  LOCALSTORAGE_KEY_LANG,
+  LOCALSTORAGE_KEY_MY_POKEMONS,
+  pokemonIdList,
+  SORT_OPTIONS,
+} from "./constants";
 
 export const modalState = atom({
   key: "modal",
@@ -8,7 +13,7 @@ export const modalState = atom({
 
 export const languageState = atom({
   key: "language",
-  default: JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY))?.language || "ko",
+  default: localStorage.getItem(LOCALSTORAGE_KEY_LANG) || "ko",
 });
 
 export const queryState = atom({
@@ -26,7 +31,10 @@ export const sortState = atom({
   default: SORT_OPTIONS.ID_ASC,
 });
 
-const pokemonIdList = Array.from({ length: NUM_OF_POKEMONS }, (_, i) => i + 1);
+export const myPokemonsListState = atom({
+  key: "myPokemonsList",
+  default: JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY_MY_POKEMONS)) || [],
+});
 
 export const pokemonNamesState = selector({
   key: "pokemonNames",

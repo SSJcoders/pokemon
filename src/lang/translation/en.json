@@ -6,7 +6,10 @@
   "searchPlaceholder": "Enter Pokemon name or id",
   "searchCount": "Total {{count}} pokemons",
   "noPokemon": "No pokemons",
-  "wishlist": "Wishlist pokemon",
+  "myPokemons": "My Pokemons",
+  "myPokemonsCount": "{{v1}}{{count}}{{v2}} pokemons are mine!",
+  "myPokemonsAll": "See all pokemons",
+  "myPokemonsFiltered": "Only My Pokemons",
   "sort": "Sort",
   "sortOptions": {
     "idASC": "ID Ascending Order",

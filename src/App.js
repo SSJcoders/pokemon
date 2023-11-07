@@ -7,6 +7,7 @@ import { languageState } from "./recoil";
 import GlobalModal from "./components/Modal/GlobalModal";
 import MainPage from "./pages/MainPage/MainPage";
 import ValidateDetail from "./pages/DetailPage/ValidateDetail";
+import MyPokemonsPage from "./pages/MyPokemonsPage/MyPokemonsPage";
 import Loader from "./components/common/Loader/Loader";
 
 function App() {
@@ -34,6 +35,14 @@ function App() {
             element={
               <Suspense fallback={<Loader />}>
                 <ValidateDetail />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/mypokemons"
+            element={
+              <Suspense fallback={<Loader />}>
+                <MyPokemonsPage />
               </Suspense>
             }
           />
