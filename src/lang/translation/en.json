@@ -24,7 +24,21 @@
   },
   "info": "Info.",
   "basicInfo": "Basic Information",
+  "basicInfoOptions": {
+    "height": "Height",
+    "weight": "Weight",
+    "majorAbility": "Major Ability",
+    "baseExperience": "Base Experience"
+  },
   "baseStats": "Base Statistics",
+  "baseStatsOptions": {
+    "hp": "HP",
+    "attack": "Attack",
+    "defense": "Defense",
+    "spAtk": "Sp.Atk",
+    "spDef": "Sp.Def",
+    "speed": "Speed"
+  },
   "evol": "Evol.",
   "pokemonTypes": {
     "bug": "bug",

@@ -24,7 +24,21 @@
   },
   "info": "정보",
   "basicInfo": "기본 정보",
+  "basicInfoOptions": {
+    "height": "신장",
+    "weight": "몸무게",
+    "majorAbility": "주 능력",
+    "baseExperience": "기본 경험치"
+  },
   "baseStats": "기본 스탯",
+  "baseStatsOptions": {
+    "hp": "체력",
+    "attack": "공격",
+    "defense": "방어",
+    "spAtk": "특수공격",
+    "spDef": "특수방어",
+    "speed": "스피드"
+  },
   "evol": "진화",
   "pokemonTypes": {
     "bug": "벌레",

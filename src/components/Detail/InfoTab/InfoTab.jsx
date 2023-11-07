@@ -1,86 +1,53 @@
-import { useRecoilValue } from "recoil";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { languageState } from "../../../recoil";
-import BaseInfo from "./BaseInfo";
+import BasicInfo from "./BasicInfo";
 import BaseStat from "./BaseStat";
 
 function InfoTab({ pokemon, majorType }) {
-  const language = useRecoilValue(languageState);
   const { t } = useTranslation();
 
   const infoList = [
     {
-      name: {
-        ko: "신장",
-        en: "Height",
-      },
+      name: "height",
       value: pokemon.height / 10 + "m",
     },
     {
-      name: {
-        ko: "몸무게",
-        en: "Weight",
-      },
+      name: "weight",
       value: pokemon.weight / 10 + "kg",
     },
     {
-      name: {
-        ko: "주 능력",
-        en: "Major Ability",
-      },
+      name: "majorAbility",
       value: pokemon.abilities[0].ability.name,
     },
     {
-      name: {
-        ko: "기본 경험치",
-        en: "Base Experience",
-      },
+      name: "baseExperience",
       value: pokemon.base_experience,
     },
   ];
 
   const statList = [
     {
-      name: {
-        ko: "체력",
-        en: "HP",
-      },
+      name: "hp",
       value: pokemon.stats[0].base_stat,
     },
     {
-      name: {
-        ko: "공격",
-        en: "Attack",
-      },
+      name: "attack",
       value: pokemon.stats[1].base_stat,
     },
     {
-      name: {
-        ko: "방어",
-        en: "Defense",
-      },
+      name: "defense",
       value: pokemon.stats[2].base_stat,
     },
     {
-      name: {
-        ko: "특수공격",
-        en: "Sp.Atk",
-      },
+      name: "spAtk",
       value: pokemon.stats[3].base_stat,
     },
     {
-      name: {
-        ko: "특수방어",
-        en: "Sp.Def",
-      },
+      name: "spDef",
       value: pokemon.stats[4].base_stat,
     },
     {
-      name: {
-        ko: "스피드",
-        en: "Speed",
-      },
+      name: "speed",
       value: pokemon.stats[5].base_stat,
     },
   ];
@@ -91,9 +58,9 @@ function InfoTab({ pokemon, majorType }) {
         <Title majorType={majorType}>{t("basicInfo")}</Title>
         <Contents>
           {infoList.map((info) => (
-            <BaseInfo
-              key={info.name[language]}
-              infoName={info.name[language]}
+            <BasicInfo
+              key={info.name}
+              infoName={t(`basicInfoOptions.${info.name}`)}
               infoValue={info.value}
             />
           ))}
@@ -104,8 +71,8 @@ function InfoTab({ pokemon, majorType }) {
         <Contents>
           {statList.map((stat) => (
             <BaseStat
-              key={stat.name[language]}
-              statName={stat.name[language]}
+              key={stat.name}
+              statName={t(`baseStatsOptions.${stat.name}`)}
               statValue={stat.value}
               majorType={majorType}
             />

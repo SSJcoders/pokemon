@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const BaseInfo = ({ infoName, infoValue }) => {
+const BasicInfo = ({ infoName, infoValue }) => {
   return (
     <Wrapper>
       <Dt>{infoName}</Dt>
@@ -9,7 +9,7 @@ const BaseInfo = ({ infoName, infoValue }) => {
   );
 };
 
-export default BaseInfo;
+export default BasicInfo;
 
 const Wrapper = styled.div`
   display: grid;
