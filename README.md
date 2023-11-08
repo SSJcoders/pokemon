@@ -54,7 +54,6 @@
 
 ### 업데이트 예정
 
-- Promise.all에 대한 에러 처리
 - 포켓몬 Evolution 탭 만들기
 
 ### ver 2.1
