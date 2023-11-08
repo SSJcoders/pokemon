@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/pokemon/static/css/main.974d6de2.css",
-    "main.js": "/pokemon/static/js/main.a8227d28.js",
+    "main.js": "/pokemon/static/js/main.288785f1.js",
     "static/media/Pretendard-Regular.woff": "/pokemon/static/media/Pretendard-Regular.32d8ced04df3d294cb98.woff",
     "static/media/Pretendard-Regular.woff2": "/pokemon/static/media/Pretendard-Regular.c2d6e5ccab1998598e2a.woff2",
     "static/media/pokeball_lg.png": "/pokemon/static/media/pokeball_lg.2c0950f1d2ec5ce01eb0.png",
     "index.html": "/pokemon/index.html",
     "main.974d6de2.css.map": "/pokemon/static/css/main.974d6de2.css.map",
-    "main.a8227d28.js.map": "/pokemon/static/js/main.a8227d28.js.map"
+    "main.288785f1.js.map": "/pokemon/static/js/main.288785f1.js.map"
   },
   "entrypoints": [
     "static/css/main.974d6de2.css",
-    "static/js/main.a8227d28.js"
+    "static/js/main.288785f1.js"
   ]
 }
