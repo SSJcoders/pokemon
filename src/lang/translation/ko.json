@@ -1,6 +1,9 @@
 {
   "appTitle": "포켓몬도감",
+  "pokemonID": "포켓몬 ID",
+  "logo": "로고",
   "loading": "로딩중",
+  "pokeball": "포켓볼",
   "randomPokemon": "랜덤 포켓몬 이미지",
   "quiz": "잠깐, 퀴즈!",
   "guess": "제 이름은 무엇일까요?",

@@ -7,7 +7,11 @@ import {
   faHeart as fasHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
-import { myPokemonsListState, pokemonByIdState } from "../../recoil";
+import {
+  languageState,
+  myPokemonsListState,
+  pokemonByIdState,
+} from "../../recoil";
 import IconButton from "../../components/common/Button/IconButton";
 import InfoTab from "../../components/Detail/InfoTab/InfoTab";
 import EvolutionTab from "../../components/Detail/EvolutionTab/EvolutionTab";
@@ -60,6 +64,7 @@ const DetailPage = ({ pokemonId }) => {
 
   // 언어 설정
   const { t } = useTranslation();
+  const language = useRecoilValue(languageState);
 
   return (
     <Wrapper majorType={majorType}>
@@ -75,6 +80,7 @@ const DetailPage = ({ pokemonId }) => {
       <Pokemon>
         <PokemonImage
           imgPath={sprites.other["official-artwork"].front_default}
+          alt={names[language]}
         />
         <PokemonInfo id={id} names={names} types={types} />
       </Pokemon>

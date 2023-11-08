@@ -8,6 +8,7 @@ import { pokemonIdList } from "../../constants";
 import { getPokemonSvgImg } from "../../utils";
 import IconButton from "../../components/common/Button/IconButton";
 import MyPokemonsEmptyImg from "../../assets/images/open_pokeball.png";
+import BouncePokeballImg from "../../assets/images/loader.gif";
 
 const MyPokemonsPage = () => {
   // 포켓몬 데이터
@@ -67,6 +68,8 @@ const MyPokemonsPage = () => {
                 src={getPokemonSvgImg(id)}
                 active={active}
                 draggable={false}
+                alt={`${t("pokemonID")} ${id}`}
+                onError={(e) => (e.target.src = BouncePokeballImg)}
               />
             </PokemonSticker>
           );

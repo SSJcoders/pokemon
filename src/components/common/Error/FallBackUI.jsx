@@ -12,7 +12,7 @@ const FallBackUI = ({ text, hasNavigateBtn }) => {
 
   return (
     <Wrapper>
-      <Image src={OpenPokeballImg} />
+      <Image src={OpenPokeballImg} alt={t("pokeball")} />
       <Text>{text}</Text>
       {hasNavigateBtn && (
         <Button type="button" onClick={goToMainPage}>

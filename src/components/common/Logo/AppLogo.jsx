@@ -7,7 +7,7 @@ const AppLogo = () => {
 
   return (
     <Wrapper onClick={() => window.location.reload()}>
-      <Image src={AppLogoImg} alt="포켓몬도감 로고" />
+      <Image src={AppLogoImg} alt={`${t("appTitle")}  ${t("logo")}}`} />
       <Text>{t("appTitle")}</Text>
     </Wrapper>
   );

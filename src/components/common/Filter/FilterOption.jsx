@@ -10,7 +10,7 @@ const FilterOption = ({ type, selected, onClick, hasRemoveIcon }) => {
     <Wrapper type={type} selected={selected} onClick={onClick}>
       <TypeLogo
         src={process.env.PUBLIC_URL + `/assets/badges/${type}.png`}
-        alt={type}
+        alt={t(`pokemonTypes.${type}`)}
         selected={selected}
       />
       <TypeText>{t(`pokemonTypes.${type}`)}</TypeText>

@@ -1,7 +1,15 @@
 import styled, { keyframes, css } from "styled-components";
+import BouncePokeballImg from "../../../assets/images/loader.gif";
 
-const PokemonImage = ({ imgPath, isAbsolute }) => {
-  return <Wrapper src={imgPath} isAbsolute={isAbsolute} />;
+const PokemonImage = ({ imgPath, isAbsolute, alt }) => {
+  return (
+    <Wrapper
+      src={imgPath}
+      isAbsolute={isAbsolute}
+      alt={alt}
+      onError={(e) => (e.target.src = BouncePokeballImg)}
+    />
+  );
 };
 
 export default PokemonImage;

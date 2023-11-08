@@ -1,6 +1,9 @@
 {
   "appTitle": "Pokedex",
+  "pokemonID": "Pokemon ID",
+  "logo": "Logo",
   "loading": "Loading",
+  "pokeball": "Pokeball",
   "randomPokemon": "Random Pokemon Image",
   "quiz": "Quiz time!",
   "guess": "Can you guess my name?",

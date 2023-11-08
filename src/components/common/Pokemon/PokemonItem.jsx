@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { languageState } from "../../../recoil";
 import PokemonInfo from "./PokemonInfo";
 import PokemonImage from "./PokemonImage";
 import PatternImg from "../../../assets/images/pattern.png";
@@ -10,6 +12,8 @@ function PokemonItem({ pokemon }, ref) {
   const { id, names, types, sprites } = pokemon;
   const majorType = pokemon.types[0].type.name;
 
+  const language = useRecoilValue(languageState);
+
   return (
     <Wrapper majorType={majorType} ref={ref}>
       <SLink to={`/${id}`} state={{ pokemon: pokemon }}>
@@ -17,6 +21,7 @@ function PokemonItem({ pokemon }, ref) {
         <PokemonImage
           imgPath={sprites.other["official-artwork"].front_default}
           isAbsolute={true}
+          alt={names[language]}
         />
       </SLink>
     </Wrapper>
