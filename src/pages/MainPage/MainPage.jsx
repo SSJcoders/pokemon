@@ -18,7 +18,7 @@ import IconButton from "../../components/common/Button/IconButton";
 import SearchBar from "../../components/Main/SearchBar";
 import SelectedFilterOptionList from "../../components/Main/SelectedFilterOptionList";
 import PokemonItem from "../../components/common/Pokemon/PokemonItem";
-import NotFound from "../../components/common/NotFound/NotFound";
+import FallBackUI from "../../components/common/Error/FallBackUI";
 import PokeballLgImg from "../../assets/images/pokeball_lg.png";
 
 const MainPage = () => {
@@ -109,7 +109,7 @@ const MainPage = () => {
             })}
         </PokemonList>
       ) : (
-        <NotFound text={t("noPokemon")} noButton={true} />
+        <FallBackUI text={t("noPokemon")} />
       )}
     </>
   );

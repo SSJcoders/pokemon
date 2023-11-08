@@ -4,7 +4,7 @@ import styled from "styled-components";
 import OpenPokeballImg from "../../../assets/images/open_pokeball.png";
 import ElevatedButton from "../Button/ElevatedButton";
 
-const NotFound = ({ text, noButton }) => {
+const FallBackUI = ({ text, hasNavigateBtn }) => {
   const navigate = useNavigate();
   const goToMainPage = () => navigate("/");
 
@@ -14,7 +14,7 @@ const NotFound = ({ text, noButton }) => {
     <Wrapper>
       <Image src={OpenPokeballImg} />
       <Text>{text}</Text>
-      {!noButton && (
+      {hasNavigateBtn && (
         <Button type="button" onClick={goToMainPage}>
           {t("goToMainPage")}
         </Button>
@@ -23,7 +23,7 @@ const NotFound = ({ text, noButton }) => {
   );
 };
 
-export default NotFound;
+export default FallBackUI;
 
 const Wrapper = styled.div`
   flex: 1;
@@ -41,7 +41,10 @@ const Image = styled.img`
   display: block;
 `;
 
-const Text = styled.div``;
+const Text = styled.div`
+  white-space: pre-line;
+  line-height: 1.5;
+`;
 
 const Button = styled.button`
   ${ElevatedButton}

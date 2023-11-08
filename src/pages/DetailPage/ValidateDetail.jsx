@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import NotFound from "../../components/common/NotFound/NotFound";
 import DetailPage from "./DetailPage";
+import FallBackUI from "../../components/common/Error/FallBackUI";
 
 function ValidateDetail() {
   const { pokemonId } = useParams();
@@ -13,7 +13,7 @@ function ValidateDetail() {
   const { t } = useTranslation();
 
   if (!isPokemonIdValid) {
-    return <NotFound text={t("notFound")} />;
+    return <FallBackUI text={t("notFound")} hasNavigateBtn={true} />;
   }
 
   return <DetailPage pokemonId={pokemonId} />;

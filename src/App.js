@@ -10,6 +10,7 @@ import ValidateDetail from "./pages/DetailPage/ValidateDetail";
 import MyPokemonsPage from "./pages/MyPokemonsPage/MyPokemonsPage";
 import Loader from "./components/common/Loader/Loader";
 import ScrollToTop from "./components/common/ScrollToTop";
+import ErrorBoundary from "./components/common/Error/ErrorBoundary";
 
 function App() {
   const language = useRecoilValue(languageState);
@@ -27,27 +28,24 @@ function App() {
           <Route
             path="/"
             element={
-              <Suspense fallback={<Loader />}>
-                <MainPage />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<Loader />}>
+                  <MainPage />
+                </Suspense>
+              </ErrorBoundary>
             }
           />
           <Route
             path="/:pokemonId"
             element={
-              <Suspense fallback={<Loader />}>
-                <ValidateDetail />
-              </Suspense>
+              <ErrorBoundary>
+                <Suspense fallback={<Loader />}>
+                  <ValidateDetail />
+                </Suspense>
+              </ErrorBoundary>
             }
           />
-          <Route
-            path="/mypokemons"
-            element={
-              <Suspense fallback={<Loader />}>
-                <MyPokemonsPage />
-              </Suspense>
-            }
-          />
+          <Route path="/mypokemons" element={<MyPokemonsPage />} />
         </Routes>
         <GlobalModal />
       </Layout>
