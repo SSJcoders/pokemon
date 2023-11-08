@@ -4,18 +4,21 @@ import styled from "styled-components";
 import OpenPokeballImg from "../../../assets/images/open_pokeball.png";
 import ElevatedButton from "../Button/ElevatedButton";
 
-const NotFound = ({ text }) => {
+const NotFound = ({ text, noButton }) => {
   const navigate = useNavigate();
   const goToMainPage = () => navigate("/");
 
   const { t } = useTranslation();
+
   return (
     <Wrapper>
       <Image src={OpenPokeballImg} />
       <Text>{text}</Text>
-      <Button type="button" onClick={goToMainPage}>
-        {t("goToMainPage")}
-      </Button>
+      {!noButton && (
+        <Button type="button" onClick={goToMainPage}>
+          {t("goToMainPage")}
+        </Button>
+      )}
     </Wrapper>
   );
 };

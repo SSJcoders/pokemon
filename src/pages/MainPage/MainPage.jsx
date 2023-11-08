@@ -101,7 +101,7 @@ const MainPage = () => {
           })}
         </PokemonList>
       ) : (
-        <NotFound text={t("noPokemon")} />
+        <NotFound text={t("noPokemon")} noButton={true} />
       )}
     </>
   );

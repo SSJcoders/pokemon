@@ -9,7 +9,7 @@ const PokemonInfo = ({ id, names, types }) => {
 
   return (
     <Wrapper>
-      <PokemonId>{"#" + String(id).padStart(4, "0")}</PokemonId>
+      <PokemonId>{"#" + String(id).padStart(3, "0")}</PokemonId>
       <PokemonName>{names[language]}</PokemonName>
       <PokemonTypes>
         {types.map(({ type }) => (

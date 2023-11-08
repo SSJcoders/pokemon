@@ -9,6 +9,7 @@ import MainPage from "./pages/MainPage/MainPage";
 import ValidateDetail from "./pages/DetailPage/ValidateDetail";
 import MyPokemonsPage from "./pages/MyPokemonsPage/MyPokemonsPage";
 import Loader from "./components/common/Loader/Loader";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 function App() {
   const language = useRecoilValue(languageState);
@@ -20,6 +21,7 @@ function App() {
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <ScrollToTop />
       <Layout>
         <Routes>
           <Route

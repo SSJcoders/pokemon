@@ -2,11 +2,12 @@ import styled, { css } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
-import { myPokemonsListState } from "../../recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { myPokemonsFilteredState, myPokemonsListState } from "../../recoil";
 import { pokemonIdList } from "../../constants";
+import { getPokemonSvgImg } from "../../utils";
 import IconButton from "../../components/common/Button/IconButton";
-import { useState } from "react";
+import MyPokemonsEmptyImg from "../../assets/images/open_pokeball.png";
 
 const MyPokemonsPage = () => {
   // 포켓몬 데이터
@@ -14,7 +15,7 @@ const MyPokemonsPage = () => {
   const isActive = (id) => myPokemonsList.includes(String(id));
 
   // 내 포켓몬만 보기 필터링
-  const [filtered, setFiltered] = useState(false);
+  const [filtered, setFiltered] = useRecoilState(myPokemonsFilteredState);
   const toggleFiltering = () => setFiltered((prev) => !prev);
   const filteredMyPokemonsList = filtered
     ? [...myPokemonsList].sort((a, b) => a - b)
@@ -34,7 +35,7 @@ const MyPokemonsPage = () => {
         <IconButton icon={faChevronLeft} fontSize="20px" onClick={goBack} />
         <Title>{t("myPokemons")}</Title>
       </NavBar>
-      <Row>
+      <Column>
         <MyPokemonsCount
           dangerouslySetInnerHTML={{
             __html: t("myPokemonsCount", {
@@ -47,7 +48,11 @@ const MyPokemonsPage = () => {
         <MyPokemonsFiltering type="button" onClick={toggleFiltering}>
           {filtered ? t("myPokemonsAll") : t("myPokemonsFiltered")}
         </MyPokemonsFiltering>
-      </Row>
+        {filteredMyPokemonsList.length === 0 && (
+          <MyPokemonsEmpty src={MyPokemonsEmptyImg}></MyPokemonsEmpty>
+        )}
+      </Column>
+
       <PokemonsGrid>
         {filteredMyPokemonsList.map((id) => {
           const active = isActive(id);
@@ -59,7 +64,7 @@ const MyPokemonsPage = () => {
             >
               <PokemonId>{`${id}`.padStart(3, "0")}</PokemonId>
               <PokemonImg
-                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${id}.svg`}
+                src={getPokemonSvgImg(id)}
                 active={active}
                 draggable={false}
               />
@@ -93,7 +98,7 @@ const Title = styled.h2`
   font-size: var(--fs-xl);
 `;
 
-const Row = styled.div`
+const Column = styled.div`
   margin-bottom: 15px;
   padding: 0 20px;
   display: flex;
@@ -120,6 +125,10 @@ const MyPokemonsFiltering = styled.button`
   background-color: var(--selected-option-bg-color);
   font-size: var(--fs-xs);
   color: var(--selected-option-color);
+`;
+
+const MyPokemonsEmpty = styled.img`
+  margin: 30px 0;
 `;
 
 const PokemonsGrid = styled.ul`

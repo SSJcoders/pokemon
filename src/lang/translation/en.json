@@ -12,7 +12,7 @@
   "myPokemons": "My Pokemons",
   "myPokemonsCount": "{{v1}}{{count}}{{v2}} pokemons are mine!",
   "myPokemonsAll": "See all pokemons",
-  "myPokemonsFiltered": "Only My Pokemons",
+  "myPokemonsFiltered": "See only my pokemons",
   "sort": "Sort",
   "sortOptions": {
     "idASC": "ID Ascending Order",

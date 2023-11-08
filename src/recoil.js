@@ -36,6 +36,11 @@ export const myPokemonsListState = atom({
   default: JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY_MY_POKEMONS)) || [],
 });
 
+export const myPokemonsFilteredState = atom({
+  key: "myPokemonsFiltered",
+  default: false,
+});
+
 export const pokemonNamesState = selector({
   key: "pokemonNames",
   get: () => {
