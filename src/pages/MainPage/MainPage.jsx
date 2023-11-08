@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -23,12 +23,18 @@ import PokeballLgImg from "../../assets/images/pokeball_lg.png";
 
 const MainPage = () => {
   // 포켓몬 리스트
-  const pokemonList = useRecoilValue(processedPokemonListState);
+  const processedPokemonList = useRecoilValue(processedPokemonListState);
+
+  // (검색, 필터, 정렬, 언어 조건이 바뀌어서)
+  // 포켓몬 리스트가 변경될 때마다 스크롤 맨 위로 이동
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [processedPokemonList]);
 
   // 무한스크롤
   const OFFSET = 20;
   const [page, setPage] = useState(1);
-  const hasMorePage = Boolean(pokemonList.length > page * OFFSET);
+  const hasMorePage = Boolean(processedPokemonList.length > page * OFFSET);
   const lastElementRef = useInfiniteScroll(hasMorePage, setPage);
 
   // 모달 열기
@@ -65,7 +71,7 @@ const MainPage = () => {
         <SearchBar />
         <Row>
           <SearchCount>
-            {t("searchCount", { count: pokemonList.length })}
+            {t("searchCount", { count: processedPokemonList.length })}
           </SearchCount>
           <SearchSortFilter>
             <IconButton
@@ -84,21 +90,23 @@ const MainPage = () => {
         </Row>
         <SelectedFilterOptionList />
       </Header>
-      {pokemonList.length > 0 ? (
+      {processedPokemonList.length > 0 ? (
         <PokemonList>
-          {pokemonList.slice(0, page * OFFSET).map((pokemon, index) => {
-            if (page * OFFSET === index + 1) {
-              return (
-                <PokemonItem
-                  key={pokemon.id}
-                  pokemon={pokemon}
-                  ref={lastElementRef}
-                />
-              );
-            } else {
-              return <PokemonItem key={pokemon.id} pokemon={pokemon} />;
-            }
-          })}
+          {processedPokemonList
+            .slice(0, page * OFFSET)
+            .map((pokemon, index) => {
+              if (page * OFFSET === index + 1) {
+                return (
+                  <PokemonItem
+                    key={pokemon.id}
+                    pokemon={pokemon}
+                    ref={lastElementRef}
+                  />
+                );
+              } else {
+                return <PokemonItem key={pokemon.id} pokemon={pokemon} />;
+              }
+            })}
         </PokemonList>
       ) : (
         <NotFound text={t("noPokemon")} noButton={true} />

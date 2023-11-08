@@ -5,7 +5,6 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    console.log("바껴라");
     window.scrollTo(0, 0);
   }, [pathname]);
 

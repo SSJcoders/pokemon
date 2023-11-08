@@ -32,7 +32,7 @@ const SearchBar = () => {
   // 검색 자동완성 처리
   const handleAutoComplete = (searchInput) => {
     const newAutoCompleteList = pokemonList.filter(({ names }) =>
-      names[language].startsWith(searchInput)
+      names[language].startsWith(searchInput.toLowerCase())
     );
 
     if (searchInput.length > 0 && newAutoCompleteList.length > 0) {

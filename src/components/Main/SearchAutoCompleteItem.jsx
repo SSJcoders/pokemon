@@ -16,7 +16,7 @@ const SearchAutoCompleteItem = ({
     <Wrapper selected={selected} onClick={onClick} onMouseEnter={onMouseEnter}>
       <PokemonImg src={imgPath} alt={name} />
       <PokemonName>
-        <PokemonMatchedName>{matchedName}</PokemonMatchedName>
+        <PokemonMatchedName>{matchedName.toLowerCase()}</PokemonMatchedName>
         <PokemonNotMatchedName>{notMatchedName}</PokemonNotMatchedName>
       </PokemonName>
       <IconButton fontSize="18px" icon={faChevronRight} color="gray" />
@@ -47,6 +47,10 @@ const PokemonImg = styled.img`
 const PokemonName = styled.div`
   flex: 1;
   font-size: var(--fs-md);
+
+  &::first-letter {
+    text-transform: uppercase;
+  }
 `;
 
 const PokemonMatchedName = styled.strong`
